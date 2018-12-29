@@ -34,7 +34,7 @@ class UserController(BaseController):
     def change_profile():
         if request.method == 'GET':
             return '''
-             <form action='login' method='POST'>
+             <form action='' method='POST'>
              <input type='text' name='name' id='name' placeholder='name'/>
              <input type='text' name='email' id='email' placeholder='email'/>
              <input type='submit' name='submit'/>
@@ -43,9 +43,14 @@ class UserController(BaseController):
         else:
             name = request.form["name"]
             email = request.form["email"]
-
+            user = User.change(name, email)
+            if type(user) == str:
+                param = {"error": user}
+                return user
+            return "success"
 
     @classmethod
     def setupUrl(cls):
         app.add_url_rule(rule='/login', view_func=cls.login, methods=["POST", "GET"])
         app.add_url_rule(rule='/logout', view_func=cls.logout, methods=["GET"])
+        app.add_url_rule(rule='/changeprofile', view_func=cls.change_profile, methods=["GET", "POST"])

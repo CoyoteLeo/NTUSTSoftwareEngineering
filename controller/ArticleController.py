@@ -1,15 +1,11 @@
 from flask import url_for, request
-from flask_login import logout_user, login_user, login_required
-from werkzeug.utils import redirect
-
 from controller.absract import BaseController
 from model.Article import Article
-from model.User import User
 
 
 class ArticleController(BaseController):
     @staticmethod
-    def new_article():
+    def new_article(board_id):
         if request.method == 'GET':
             return '''
          <form action='' method='POST'>
@@ -22,7 +18,6 @@ class ArticleController(BaseController):
             title = request.form["title"]
             content = request.form["content"]
             author_id = 1
-            board_id = 1
             article = Article.create(title=title, content=content, author_id=author_id, board_id=board_id)
             if type(article) == str:
                 param = {"error": article}
@@ -30,7 +25,7 @@ class ArticleController(BaseController):
             return "success"
 
     @staticmethod
-    def change_article():
+    def change_article(board_id, article_id):
         if request.method == 'GET':
             return '''
          <form action='' method='POST'>
@@ -42,16 +37,13 @@ class ArticleController(BaseController):
         if request.method == 'POST':
             title = request.form["title"]
             content = request.form["content"]
-            author_id = 1
-            board_id = 1
-            id = 1
-            article = Article.change(title=title, content=content, author_id=author_id, board_id=board_id, id=id)
+            article = Article.change(title=title, content=content, board_id=board_id, id=article_id)
             if type(article) == str:
                 param = {"error": article}
                 return article
             return "success"
         else:
-            article = Article.delete(1)
+            article = Article.delete(id=article_id)
             if type(article) == str:
                 param = {"error": article}
                 return article
@@ -60,7 +52,7 @@ class ArticleController(BaseController):
     @classmethod
     def setupUrl(cls):
         from app import app
-        app.add_url_rule(rule='/newarticle', view_func=cls.new_article,
+        app.add_url_rule(rule='/board/<int:board_id>/article/', view_func=cls.new_article,
                          methods=["POST", "GET"])
-        app.add_url_rule(rule='/changearticle', view_func=cls.change_article,
+        app.add_url_rule(rule='/board/<int:board_id>/article/<int:article_id>/', view_func=cls.change_article,
                          methods=["POST", "GET", "DELETE"])

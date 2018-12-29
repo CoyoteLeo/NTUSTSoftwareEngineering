@@ -35,7 +35,7 @@ class Article(BaseModel):
         return "create"
 
     @classmethod
-    def change(cls, title, content, author_id, board_id, id):
+    def change(cls, title, content, board_id, id):
         return "change"
 
     @classmethod
