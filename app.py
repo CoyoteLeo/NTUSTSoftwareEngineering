@@ -14,7 +14,8 @@ controllers = [
     'UserController',
     'BoardController',
     'ArticleController',
-    'CommentController'
+    'CommentController',
+    'LikeController'
 ]
 
 app.secret_key = '@fnsopdmfknsjfklvn;andspanadfak;dsf;'

@@ -11,3 +11,11 @@ class Like(BaseModel):
 
     author = relationship('User', foreign_keys='Like.author_id', backref='like_author_id')
     article = relationship('Article', foreign_keys='Like.article_id', backref='like_article_id')
+
+    @classmethod
+    def givelike(cls, author_id, board_id, article_id):
+        return "likeee"
+
+    @classmethod
+    def deletelike(cls, author_id, board_id, article_id, id):
+        return "no likeee"
