@@ -10,6 +10,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 app = Flask(__name__)
 
 controllers = [
+    'MainController',
     'UserController',
 ]
 
@@ -24,9 +25,10 @@ def user_loader(id):
 
 login_manager.login_view = "login"
 
-module_parent = import_module(os.path.join(BASE_DIR, "controller"))
 for controller_str in controllers:
-    getattr(module_parent, controller_str).setupUrl()
+    module=import_module(f"controller.{controller_str}")
+    getattr(module,controller_str).setupUrl()
+    
 
 if __name__ == '__main__':
     # app.debug = DEBUG

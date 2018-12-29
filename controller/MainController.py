@@ -7,7 +7,7 @@ from app import app
 from model.User import User
 
 
-class UserController(BaseController):
+class MainController(BaseController):
     @staticmethod
     @login_required
     def index():
