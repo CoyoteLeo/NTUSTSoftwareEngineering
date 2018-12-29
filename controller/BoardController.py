@@ -37,12 +37,12 @@ class BoardController(BaseController):
 
     @staticmethod
     @login_required
-    def board(board_id):
+    def article_list(board_id):
         articles = Article.filter(board_id=board_id)
         return render_template("board/article_list.html", board_id=board_id, articles=articles)
 
     @classmethod
     def setupUrl(cls):
         app.add_url_rule(rule='/board/', view_func=cls.send_request, methods=["POST", "GET"])
-        app.add_url_rule(rule='/board/<int:board_id>/', view_func=cls.board, methods=["GET"])
+        app.add_url_rule(rule='/board/<int:board_id>/', view_func=cls.article_list, methods=["GET"])
         app.add_url_rule(rule='/', view_func=cls.board_list, methods=["GET"])

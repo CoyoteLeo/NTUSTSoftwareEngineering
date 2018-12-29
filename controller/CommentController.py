@@ -1,11 +1,14 @@
-from flask import url_for, request
+from flask import url_for, request, redirect
+from flask_login import login_required, current_user
+
 from controller.absract import BaseController
 from model.Comment import Comment
 
 
 class CommentController(BaseController):
     @staticmethod
-    def new_comment(article_id):
+    @login_required
+    def new_comment(board_id, article_id):
         if request.method == 'GET':
             return '''
             <form action='' method='POST'>
@@ -15,41 +18,47 @@ class CommentController(BaseController):
                          '''
         else:
             content = request.form["content"]
-            author_id = 1
+            author_id = current_user.id
             comment = Comment.create(content=content, author_id=author_id, article_id=article_id)
             if type(comment) == str:
                 param = {"error": comment}
                 return comment
-            return "success"
+            return redirect(url_for("article", board_id=board_id, article_id=article_id))
 
     @staticmethod
-    def change_comment(article_id, comment_id):
-        if request.method == 'GET':
-            return '''
-            <form action='' method='POST'>
-            <input type='text' name='content' id='content' placeholder='content'/>
-            <input type='submit' name='submit'/>
-            </form>
-                         '''
-        if request.method == 'POST':
-            content = request.form["content"]
-
-            comment = Comment.change(content=content, article_id=article_id, id=comment_id)
-            if type(comment) == str:
-                param = {"error": comment}
-                return comment
-            return "success"
+    @login_required
+    def comment(board_id, article_id, comment_id):
+        comment = Comment.get(id=comment_id)
+        if comment:
+            if request.method == 'GET':
+                return f'''
+                <form action='' method='POST'>
+                <input type='text' name='content' id='content' value={comment.content} placeholder='content'/>
+                <input type='submit' name='submit'/>
+                </form>
+                <form action='' method='POST'>
+                                <input type='submit' name='delete' value="delete"/>
+                            </form>
+                             '''
+            elif request.method == 'POST':
+                if request.form.get("delete", None) == "delete":
+                    comment.delete()
+                    if type(comment) == str:
+                        param = {"error": comment}
+                        return comment
+                    return redirect(url_for("article", board_id=board_id, article_id=article_id))
+                else:
+                    comment.content = request.form["content"]
+                    comment.save()
+                    return redirect(url_for("article", board_id=board_id, article_id=article_id))
         else:
-            comment = Comment.delete(id=comment_id)
-            if type(comment) == str:
-                param = {"error": comment}
-                return comment
-            return "success"
+            return redirect("/")
 
     @classmethod
     def setupUrl(cls):
         from app import app
-        app.add_url_rule(rule='/article/<int:article_id>/comment/', view_func=cls.new_comment,
+        app.add_url_rule(rule='/board/<int:board_id>/article/<int:article_id>/comment/', view_func=cls.new_comment,
                          methods=["POST", "GET"])
-        app.add_url_rule(rule='/article/<int:article_id>/comment/<int:comment_id>/', view_func=cls.change_comment,
-                         methods=["POST", "GET", "DELETE"])
+        app.add_url_rule(rule='/board/<int:board_id>/article/<int:article_id>/comment/<int:comment_id>/',
+                         view_func=cls.comment,
+                         methods=["POST", "GET"])

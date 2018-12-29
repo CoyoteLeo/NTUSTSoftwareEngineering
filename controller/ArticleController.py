@@ -37,25 +37,29 @@ class ArticleController(BaseController):
                 if request.method == 'GET':
                     return f'''
                             <form action='' method='POST'>
-                            <input type='text' name='title' id='title' value={article.title} placeholder='title'/>
-                            <input type='text' name='content' id='content' value={article.content} placeholder='content'/>
-                            <input type='submit' name='submit'/>
+                                <input type='text' name='title' id='title' value={article.title} placeholder='title'/>
+                                <input type='text' name='content' id='content' value={article.content} placeholder='content'/>
+                                <input type='submit' name='submit'/>
+                            </form>
+                            <form action='' method='POST'>
+                                <input type='submit' name='delete' value="delete"/>
                             </form>
                           '''
                 elif request.method == 'POST':
-                    title = request.form["title"]
-                    content = request.form["content"]
-                    article = article.update(title=title, content=content)
-                    if type(article) == str:
-                        param = {"error": article}
-                        return article
-                    return redirect(url_for("article", board_id=board_id, article_id=article_id))
-                else:
-                    article = Article.delete(id=article_id)
-                    if type(article) == str:
-                        param = {"error": article}
-                        return article
-                    return redirect(f"/board/{board_id}/")
+                    if request.form.get("delete", None) == "delete":
+                        article.delete()
+                        if type(article) == str:
+                            param = {"error": article}
+                            return article
+                        return redirect(f"/board/{board_id}/")
+                    else:
+                        article.title = request.form["title"]
+                        article.content = request.form["content"]
+                        article.save()
+                        if type(article) == str:
+                            param = {"error": article}
+                            return article
+                        return redirect(url_for("article", board_id=board_id, article_id=article_id))
             else:
                 return f"<div>{article.title}</div>" \
                     f"<div>{article.content}<div/>"

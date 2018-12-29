@@ -48,12 +48,13 @@ class BaseModel(AbstractConcreteBase, Base):
     def exist(cls, **kwargs):
         return session.query(literal(True)).filter(session.query(cls).filter_by(**kwargs).exists()).scalar()
 
-    def update(self):
+    def save(self):
         session.merge(self)
+        session.commit()
 
     def delete(self):
         session.delete(self)
-        session.close()
+        session.commit()
 
 # # 5. 查询数据
 # # 5.1 返回结果集的第二项

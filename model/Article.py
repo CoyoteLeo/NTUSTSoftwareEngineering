@@ -25,8 +25,3 @@ class Article(BaseModel):
     @classmethod
     def get_from_board(cls, board_id):
         return super(Article, cls).filter(board_id=board_id)
-
-    @classmethod
-    def change(cls, title, content, board_id, id):
-        return "change"
-
