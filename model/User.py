@@ -17,17 +17,17 @@ class User(BaseModel, UserMixin):
     email = sa.Column('email', sa.String(120), index=True, unique=True, nullable=False)
     username = sa.Column('username', sa.String(120), index=True, unique=True, nullable=False)
     password = sa.Column('password', sa.String(120), nullable=False)
-    user_level = sa.Column('level', sa.Integer, default=UserLevel.user.value, index=True)
+    level = sa.Column('level', sa.Integer, default=UserLevel.user.value, index=True)
     last_login = sa.Column('last_login', sa.DateTime(timezone=True), default=update_with_timezone,
                            onupdate=update_with_timezone)
 
     @property
     def is_active(self):
-        return self.user_level > 0
+        return self.level > 0
 
     @property
     def is_authenticated(self):
-        return True
+        return self.level > 0
 
     @property
     def is_anonymous(self):
@@ -62,4 +62,4 @@ class User(BaseModel, UserMixin):
             return "此信箱已被註冊過了"
         elif cls.exist(username=kwargs["username"]):
             return "此帳號已被註冊過了"
-        return super(User, cls).create()
+        return super(User, cls).create(**kwargs)

@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base, AbstractConcreteBase
-from sqlalchemy import Column, Integer, DateTime
+from sqlalchemy import Column, Integer, DateTime, literal
 import datetime
 import pytz
 
@@ -28,7 +28,8 @@ class BaseModel(AbstractConcreteBase, Base):
     @classmethod
     def create(cls, **kwargs):
         obj = cls(**kwargs)
-        from model import session
+        from model import DB_Session
+        seesion = DB_Session
         session.add(obj)
         session.commit()
         session.close()
@@ -49,7 +50,7 @@ class BaseModel(AbstractConcreteBase, Base):
 
     @classmethod
     def exist(cls, **kwargs):
-        return bool(session.query(cls.id).filter(session.query(cls.id).filter_by(**kwargs).exists()).scalar())
+        return session.query(literal(True)).filter(session.query(cls).filter_by(**kwargs).exists()).scalar()
 
     def update(self):
         from model import session

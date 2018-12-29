@@ -29,7 +29,9 @@ def upgrade():
         sa.Column('updated_at', sa.DateTime(timezone=True), default=update_with_timezone,
                   onupdate=update_with_timezone),
         sa.Column('name', sa.String(100), nullable=False),
-        sa.Column('admin_id', sa.Integer, sa.ForeignKey("User.id"), nullable=False),
+        sa.Column('description', sa.Text, nullable=True),
+        sa.Column('admin_id', sa.Integer, sa.ForeignKey("User.id"), nullable=True),
+        sa.Column('applier_id', sa.Integer, sa.ForeignKey("User.id"), nullable=False),
         sa.Column('last_active', sa.DateTime(timezone=True), default=update_with_timezone,
                   onupdate=update_with_timezone),
         sa.Column('state', sa.Integer, default=BoardActiveLevel.pending.value, nullable=False)
