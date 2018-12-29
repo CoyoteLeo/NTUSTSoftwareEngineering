@@ -1,10 +1,8 @@
-from flask import url_for, request
-from flask_login import logout_user, login_user, login_required
-from werkzeug.utils import redirect
 
+from flask_login import login_required
 from controller.absract import BaseController
 from app import app
-from model.User import User
+
 
 
 class MainController(BaseController):

@@ -66,4 +66,4 @@ class User(BaseModel, UserMixin):
 
     @classmethod
     def change(cls, new_name, new_email):
-        pass
+        return "change"

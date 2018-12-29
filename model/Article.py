@@ -27,9 +27,6 @@ class Article(BaseModel):
         return super(Article, cls).filter(board_id=board_id)
 
     @classmethod
-    def change(cls, title, content, author_id, board_id, id):
+    def change(cls, title, content, board_id, id):
         return "change"
 
-    @classmethod
-    def delete(cls, id):
-        return "delete"

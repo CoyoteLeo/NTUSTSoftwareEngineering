@@ -12,3 +12,15 @@ class Comment(BaseModel):
 
     author = relationship('User', foreign_keys='Comment.author_id', backref='comment_author_id')
     article = relationship('Article', foreign_keys='Comment.article_id', backref='comment_article_id')
+
+    @classmethod
+    def create(cls, content, author_id, article_id):
+        return "create"
+
+    @classmethod
+    def change(cls, content, article_id, id):
+        return "change"
+
+    @classmethod
+    def delete(cls, id):
+        return "delete"
