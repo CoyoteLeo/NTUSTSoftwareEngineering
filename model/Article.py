@@ -1,6 +1,6 @@
 from enum import Enum
 
-import sqlalchemy as  sa
+import sqlalchemy as sa
 from sqlalchemy.orm import relationship
 
 from model.BaseModel import BaseModel, update_with_timezone
@@ -16,12 +16,28 @@ class Article(BaseModel):
     __tablename__ = 'Article'
     title = sa.Column('name', sa.String(100), nullable=False)
     content = sa.Column('content', sa.Text, nullable=False)
-    author_id = sa.Column('author_id', sa.Integer, sa.ForeignKey("User.id"), nullable=False)
-    board_id = sa.Column('board_id', sa.Integer, sa.ForeignKey("Board.id"), nullable=False)
+    author_id = sa.Column('author_id', sa.Integer,
+                          sa.ForeignKey("User.id"), nullable=False)
+    board_id = sa.Column('board_id', sa.Integer,
+                         sa.ForeignKey("Board.id"), nullable=False)
 
-    author = relationship('User', foreign_keys='User.author_id', backref='article_author_id')
-    board = relationship('Board', foreign_keys='Article.board_id', backref='article_board_id')
+    author = relationship(
+        'User', foreign_keys='User.author_id', backref='article_author_id')
+    board = relationship(
+        'Board', foreign_keys='Article.board_id', backref='article_board_id')
 
     @classmethod
     def get_from_board(cls, board_id):
         return super(Article, cls).filter(board_id=board_id)
+
+    @classmethod
+    def create(cls, title, content, author_id, board_id):
+        return "create"
+
+    @classmethod
+    def change(cls, title, content, author_id, board_id, id):
+        return "change"
+
+    @classmethod
+    def delete(cls, id):
+        return "delete"

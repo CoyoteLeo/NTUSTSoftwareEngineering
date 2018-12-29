@@ -48,6 +48,21 @@ class UserController(BaseController):
         logout_user()
         return redirect(url_for('login'))
 
+    @staticmethod
+    def change_profile():
+        if request.method == 'GET':
+            return '''
+             <form action='login' method='POST'>
+             <input type='text' name='name' id='name' placeholder='name'/>
+             <input type='text' name='email' id='email' placeholder='email'/>
+             <input type='submit' name='submit'/>
+             </form>
+                          '''
+        else:
+            name = request.form["name"]
+            email = request.form["email"]
+
+
     @classmethod
     def setupUrl(cls):
         app.add_url_rule(rule='/login', view_func=cls.login, methods=["POST", "GET"])

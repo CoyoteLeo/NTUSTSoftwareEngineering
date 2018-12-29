@@ -63,3 +63,7 @@ class User(BaseModel, UserMixin):
         elif cls.exist(username=kwargs["username"]):
             return "此帳號已被註冊過了"
         return super(User, cls).create(**kwargs)
+
+    @classmethod
+    def change(cls, new_name, new_email):
+        pass
