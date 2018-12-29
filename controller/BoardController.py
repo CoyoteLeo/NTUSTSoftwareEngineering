@@ -5,7 +5,6 @@ from werkzeug.utils import redirect
 from controller.absract import BaseController
 from app import app
 from model.Board import Board
-from model.User import User
 
 
 class BoardController(BaseController):
