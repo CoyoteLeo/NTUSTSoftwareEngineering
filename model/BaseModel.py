@@ -28,11 +28,8 @@ class BaseModel(AbstractConcreteBase, Base):
     @classmethod
     def create(cls, **kwargs):
         obj = cls(**kwargs)
-        from model import DB_Session
-        seesion = DB_Session
         session.add(obj)
         session.commit()
-        session.close()
         return obj
 
     @classmethod
@@ -41,7 +38,6 @@ class BaseModel(AbstractConcreteBase, Base):
 
     @classmethod
     def filter(cls, order_by=None, **kwargs):
-        from model import session
         return session.query(cls).filter_by(**kwargs)
 
     @classmethod
@@ -53,11 +49,9 @@ class BaseModel(AbstractConcreteBase, Base):
         return session.query(literal(True)).filter(session.query(cls).filter_by(**kwargs).exists()).scalar()
 
     def update(self):
-        from model import session
         session.merge(self)
 
     def delete(self):
-        from model import session
         session.delete(self)
         session.close()
 

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block body %}
+    {% for article in articles %}
+        <div>
+            <a href="/board/{{ board_id }}/article/{{ article.id }}/">{{ article.title }}</a>
+            <i>作者: {{ article.author.name or article.author.username }}</i>
+        </div>
+    {% endfor %}
+{% endblock %}

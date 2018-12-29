@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block body %}
+    {% for board in boards %}
+        <div>
+            <a href="/board/{{ board.id }}">{{ board.name }}</a>
+            <i>上次活躍時間: {{ board.last_active.strftime('%Y/%m/%d %H:%M') }}</i>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -12,9 +12,8 @@ app = Flask(__name__)
 controllers = [
     'MainController',
     'UserController',
-    'BoardController'
+    'BoardController',
     'ArticleController'
-
 ]
 
 app.secret_key = '@fnsopdmfknsjfklvn;andspanadfak;dsf;'
