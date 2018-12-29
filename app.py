@@ -1,9 +1,11 @@
+import os
 from importlib import import_module
 
 from flask import Flask
 from flask_login import LoginManager
-from env_production import DEBUG
 from model.User import User
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 app = Flask(__name__)
 
@@ -22,7 +24,7 @@ def user_loader(id):
 
 login_manager.login_view = "login"
 
-module_parent = import_module("controller")
+module_parent = import_module(os.path.join(BASE_DIR, "controller"))
 for controller_str in controllers:
     getattr(module_parent, controller_str).setupUrl()
 
