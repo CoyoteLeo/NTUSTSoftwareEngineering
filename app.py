@@ -33,7 +33,6 @@ for controller_str in controllers:
     module = import_module(f"controller.{controller_str}")
     getattr(module, controller_str).setupUrl()
 
-
 if __name__ == '__main__':
     # app.debug = DEBUG
     app.run()

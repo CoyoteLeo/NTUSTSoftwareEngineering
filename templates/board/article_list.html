@@ -1,9 +1,22 @@
-{% extends "base.html" %}
-{% block body %}
+{% extends "board/left_bar.html" %}
+{% block main %}
     {% for article in articles %}
-        <div>
-            <a href="/board/{{ board_id }}/article/{{ article.id }}/">{{ article.title }}</a>
-            <i>作者: {{ article.author.name or article.author.username }}</i>
+        <div class="article">
+            <div style="font-size: smaller;color: #3174A7;display: flex">
+                <div style="font-style: italic">{{ article.Article.author.name or article.Article.author.username }}&nbsp;&nbsp;&nbsp;</div>
+                <div>{{ article.Article.created_at.strftime("%m-%d %H:%M") }}</div>
+            </div>
+            <div style="font-size: x-large;margin-top: 3px">
+                <a style="color: #000;"
+                   href="/board/{{ board_id }}/article/{{ article.Article.id }}/"><b>{{ article.Article.title }}</b></a>
+            </div>
+            <div style="margin-top: 5px;font-size: large">
+                {{ article.Article.content|truncate(30) }} ...
+            </div>
+            <div style="display: flex;margin-top: 20px;font-size: small">
+                <div>讚 {{ article.like_amount }}&nbsp;&nbsp;&nbsp;</div>
+                <div>回應 {{ article.comment_amount }}</div>
+            </div>
         </div>
     {% endfor %}
 {% endblock %}

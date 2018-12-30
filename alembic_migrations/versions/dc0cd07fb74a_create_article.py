@@ -27,7 +27,7 @@ def upgrade():
                   onupdate=update_with_timezone),
         sa.Column('updated_at', sa.DateTime(timezone=True), default=update_with_timezone,
                   onupdate=update_with_timezone),
-        sa.Column('name', sa.String(100), nullable=False),
+        sa.Column('title', sa.String(100), nullable=False),
         sa.Column('content', sa.Text, nullable=False),
         sa.Column('author_id', sa.Integer, sa.ForeignKey("User.id"), nullable=False),
         sa.Column('board_id', sa.Integer, sa.ForeignKey("Board.id"), nullable=False),

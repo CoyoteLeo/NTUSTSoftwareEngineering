@@ -1,9 +1,10 @@
-from flask import url_for, request
+from flask import url_for, request, render_template
 from flask_login import login_required, current_user
 from werkzeug.utils import redirect
 
 from controller.absract import BaseController
 from model.Article import Article
+from model.Board import Board
 
 
 class ArticleController(BaseController):
@@ -66,6 +67,20 @@ class ArticleController(BaseController):
         else:
             return redirect("/")
 
+    @staticmethod
+    @login_required
+    def search():
+        search = request.form["article_title"]
+        result = dict()
+        articles = Article.search_for_title(search)
+        result["boards"] = Board.filter(state=1)
+        if type(articles) == str:
+            result["error"] = articles
+            result["articles"] = []
+        else:
+            result["articles"] = articles
+        return render_template("board/search_result.html", **result)
+
     @classmethod
     def setupUrl(cls):
         from app import app
@@ -73,3 +88,4 @@ class ArticleController(BaseController):
                          methods=["POST", "GET"])
         app.add_url_rule(rule='/board/<int:board_id>/article/<int:article_id>/', view_func=cls.article,
                          methods=["POST", "GET", "DELETE"])
+        app.add_url_rule(rule='/article/search/', view_func=cls.search, methods=["POST"])

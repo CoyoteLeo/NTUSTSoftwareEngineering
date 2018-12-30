@@ -13,13 +13,7 @@ class BoardController(BaseController):
     @login_required
     def send_request():
         if request.method == 'GET':
-            return '''
-         <form action='' method='POST'>
-         <input type='text' name='name' id='name' placeholder='name'/>
-         <input type='text' name='description' id='description' placeholder='description'/>
-         <input type='submit' name='submit'/>
-         </form>
-                      '''
+            return render_template("board/apply_board.html")
         else:
             name = request.form["name"]
             description = request.form["description"]
@@ -38,8 +32,9 @@ class BoardController(BaseController):
     @staticmethod
     @login_required
     def article_list(board_id):
-        articles = Article.filter(board_id=board_id)
-        return render_template("board/article_list.html", board_id=board_id, articles=articles)
+        articles = Article.get_from_board_with_info(board_id=board_id)
+        boards = Board.filter(state=1)
+        return render_template("board/article_list.html", board_id=board_id, articles=articles, boards=boards)
 
     @classmethod
     def setupUrl(cls):

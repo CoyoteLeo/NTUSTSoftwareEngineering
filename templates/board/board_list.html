@@ -1,9 +1,19 @@
 {% extends "base.html" %}
 {% block body %}
-    {% for board in boards %}
-        <div>
-            <a href="/board/{{ board.id }}">{{ board.name }}</a>
-            <i>上次活躍時間: {{ board.last_active.strftime('%Y/%m/%d %H:%M') }}</i>
+    <div class="row" style="padding-top: 20px;">
+        <div class="col-12">
+            {% for board in boards %}
+                <div class="card text-white bg-primary" style="width: 50rem;margin:auto">
+                    <div class="card-body">
+                        <div style="float:right;">版主：{{ board.admin.name }}</div>
+                        <h4 class="card-title">{{ board.name }}</h4>
+                        <div class="card-text" style="width: 600px;">{{ board.description }}</div>
+                        <div>
+                            <a style="float: right" href="/board/{{ board.id }}/" class="btn btn-light">進入看板</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+    </div>
 {% endblock %}

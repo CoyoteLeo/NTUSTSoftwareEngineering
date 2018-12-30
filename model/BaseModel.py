@@ -3,9 +3,17 @@ from sqlalchemy import Column, Integer, DateTime, literal
 import datetime
 import pytz
 
-from model import session
+from model import session, DB_Session
 
 Base = declarative_base()
+
+
+def flush_when_exception(func, **kwargs):
+    try:
+        return func(**kwargs)
+    except Exception as e:
+        session = DB_Session()
+        raise e
 
 
 def update_with_timezone():

@@ -1,9 +1,14 @@
 from enum import Enum
 
 import sqlalchemy as sa
+from sqlalchemy import func
 from sqlalchemy.orm import relationship
 
+from model import session
 from model.BaseModel import BaseModel, update_with_timezone
+from model.Comment import Comment
+from model.Like import Like
+from model.User import User
 
 
 class BoardActiveLevel(Enum):
@@ -14,7 +19,7 @@ class BoardActiveLevel(Enum):
 
 class Article(BaseModel):
     __tablename__ = 'Article'
-    title = sa.Column('name', sa.String(100), nullable=False)
+    title = sa.Column('title', sa.String(100), nullable=False)
     content = sa.Column('content', sa.Text, nullable=False)
     author_id = sa.Column('author_id', sa.Integer, sa.ForeignKey("User.id"), nullable=False)
     board_id = sa.Column('board_id', sa.Integer, sa.ForeignKey("Board.id"), nullable=False)
@@ -25,3 +30,17 @@ class Article(BaseModel):
     @classmethod
     def get_from_board(cls, board_id):
         return super(Article, cls).filter(board_id=board_id)
+
+    @classmethod
+    def get_from_board_with_info(cls, board_id):
+        result = session.query(Article, func.count(Comment.id).label("comment_amount"),
+                               func.count(Like.id).label("like_amount")) \
+            .select_from(Article) \
+            .outerjoin(Comment, Like) \
+            .group_by(Article.id)
+        return result
+
+    @classmethod
+    def search_for_title(cls, title):
+        result = session.query(Article).filter(Article.title.contains(title))
+        return result
