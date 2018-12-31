@@ -2,7 +2,6 @@ from __future__ import with_statement
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
-import env_production
 
 # add the model path to sys.path
 import sys
@@ -44,7 +43,7 @@ def run_migrations_offline():
     script output.
 
     """
-    url = env_production.DATABASE_URL
+    url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url, target_metadata=target_metadata, literal_binds=True)
 
