@@ -40,7 +40,7 @@ class UserController(BaseController):
     def profile():
         if request.method == 'GET':
             user_id = request.values.get("id", None)
-            user = current_user if user_id is None else User.get(id=user_id)
+            user = current_user if not user_id else User.get(id=user_id) or current_user
             return render_template("user/page.html", user=user)
         else:
             if request.form.get("edit", None) == "edit":
