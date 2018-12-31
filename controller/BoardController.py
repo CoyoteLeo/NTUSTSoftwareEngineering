@@ -32,7 +32,7 @@ class BoardController(BaseController):
     @staticmethod
     @login_required
     def article_list(board_id):
-        articles = Article.get_from_board_with_info(board_id=board_id)
+        articles = Article.filter(board_id=board_id)
         boards = Board.filter(state=1)
         return render_template("board/article_list.html", board_id=board_id, articles=articles, boards=boards)
 

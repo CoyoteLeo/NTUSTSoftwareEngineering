@@ -11,4 +11,4 @@ class Comment(BaseModel):
     article_id = sa.Column('article_id', sa.Integer, sa.ForeignKey("Article.id"), nullable=False)
 
     author = relationship('User', foreign_keys='Comment.author_id', backref='comment_author_id')
-    article = relationship('Article', foreign_keys='Comment.article_id', backref='comment_article_id')
+    article = relationship('Article', foreign_keys='Comment.article_id', backref='comments')

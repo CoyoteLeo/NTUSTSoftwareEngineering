@@ -10,7 +10,7 @@ class Like(BaseModel):
     article_id = sa.Column('article_id', sa.Integer, sa.ForeignKey("Article.id"), nullable=False)
 
     author = relationship('User', foreign_keys='Like.author_id', backref='like_author_id')
-    article = relationship('Article', foreign_keys='Like.article_id', backref='like_article_id')
+    article = relationship('Article', foreign_keys='Like.article_id', backref='likes')
 
     @classmethod
     def givelike(cls, author_id, board_id, article_id):

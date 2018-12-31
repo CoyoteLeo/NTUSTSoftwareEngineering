@@ -22,4 +22,4 @@ class LikeController(BaseController):
     def setupUrl(cls):
         from app import app
         app.add_url_rule(rule='/board/<int:board_id>/article/<int:article_id>/like/', view_func=cls.like,
-                         methods=["POST"])
+                         methods=["GET"])

@@ -32,15 +32,6 @@ class Article(BaseModel):
         return super(Article, cls).filter(board_id=board_id)
 
     @classmethod
-    def get_from_board_with_info(cls, board_id):
-        result = session.query(Article, func.count(Comment.id).label("comment_amount"),
-                               func.count(Like.id).label("like_amount")) \
-            .select_from(Article) \
-            .outerjoin(Comment, Like) \
-            .group_by(Article.id)
-        return result
-
-    @classmethod
     def search_for_title(cls, title):
         result = session.query(Article).filter(Article.title.contains(title))
         return result

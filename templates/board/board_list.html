@@ -1,9 +1,20 @@
 {% extends "base.html" %}
 {% block body %}
+    <style>
+        .bd {
+            width: 50rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .bd + .bd {
+            margin-top: 10px;
+        }
+    </style>
     <div class="row" style="padding-top: 20px;">
         <div class="col-12">
             {% for board in boards %}
-                <div class="card text-white bg-primary" style="width: 50rem;margin:auto">
+                <div class="card text-white bg-primary bd">
                     <div class="card-body">
                         <div style="float:right;">版主：{{ board.admin.name }}</div>
                         <h4 class="card-title">{{ board.name }}</h4>

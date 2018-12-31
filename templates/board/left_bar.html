@@ -29,7 +29,7 @@
                     <b>看板列表</b>
                 </a>
                 {% for board in boards %}
-                    <a href="/board/{{ board.id }}/" style="border-radius: 5px"
+                    <a href="/board/{{ board.id }}/" style="border-radius: 5px;margin-top: 5px"
                        class="btn btn-primary text-left" role="button">
                         <b>● {{ board.name }}</b>
                     </a>
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="col-md-6"
-             style="margin-left:20px;padding:20px 20px 20px 40px;background-color: #C3DFFD;min-height: 50vh;border-radius: 25px">
+             style="margin-left:20px;padding:20px 20px 20px 40px;background-color: aliceblue;min-height: 50vh;border-radius: 25px">
             {% block main %}{% endblock %}
         </div>
         <div class="col-md-3" style="margin-left: 20px;">

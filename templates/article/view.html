@@ -1,0 +1,120 @@
+{% extends "board/left_bar.html" %}
+{% block main %}
+    <style>
+        .btn2 {
+            cursor: pointer;
+            width: 50%;
+            font-size: .875rem;
+            line-height: 1;
+        }
+    </style>
+    <div>
+        <span style="font-size: small; ">{{ article.author.name }}</span>&nbsp
+        <span style="font-size: xx-small; color: gray; "><i>{{ article.created_at.strftime("%Y/%m/%d") }}</i></span>
+        {% if current_user.id == article.author_id %}
+            <div style="float: right" class="btn-group btn-group-justified btn-group-sm pull-right">
+                <form method="post">
+                    <button class="btn btn-sm btn-outline-primary" type="submit" name="edit" value="edit"
+                            style="color: rgb(166, 204, 240);border-color: rgb(166, 204, 240)">
+                        編輯
+                    </button>
+                </form>
+                <form method="post">
+                    <button class="btn btn-sm btn-outline-primary" type="submit" name="delete" value="delete"
+                            style="color: rgb(166, 204, 240);border-color: rgb(166, 204, 240)">
+                        刪除
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+    <HR color=white size="3" width="50%" align="left">
+    <h3>{{ article.title }}</h3>
+    <h6>
+        {{ article.content.replace('\n',"<br/>") }}
+    </h6>
+    <HR color=white size="3" align="left" style="margin-bottom: 0">
+    <div style="display: flex;">
+        {% if isLike %}
+            <div id="like" class="btn2 text-center"
+                 style="border-right: 1px solid rgba(0,0,0,.1);padding-top: 16px;padding-bottom: 16px;color: blue"
+                 onclick="likeToggle()">
+                讚 {{ article.comments|length }}
+            </div>
+        {% else %}
+            <div id="like" class="btn2 text-center"
+                 style="border-right: 1px solid rgba(0,0,0,.1);padding-top: 16px;padding-bottom: 16px;color: black"
+                 onclick="likeToggle()">
+                讚 {{ article.comments|length }}
+            </div>
+        {% endif %}
+
+        <div class="btn2 text-center" style="padding-top: 16px;padding-bottom: 16px;" onclick="openReply()">回應</div>
+    </div>
+    <HR color=white size="3" align="left" style="margin-top: 0">
+    {% for comment in article.comments %}
+        {% if loop.index0 % 2 == 0 %}
+            <div class="card" style="border:0;background-color: #DFECF9">
+                <div class="card-body">
+                    <h6 class="card-title"><b>{{ comment.author.name }}</b></h6>
+                    <p class="card-text">{{ comment.content }}</p>
+                    {% if current_user.id == comment.author_id %}
+                        <div class="btn-group btn-group-justified btn-group-sm">
+                            <form method="post" action="comment/{{ comment.id }}/">
+                                <button class="btn btn-primary btn-sm" type="submit" name="delete" value="delete"
+                                        style="background-color: rgb(166, 204, 240);border-color: aliceblue">
+                                    刪除
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <div class="card" style="border:0;">
+                <div class="card-body">
+                    <h6 class="card-title"><b>{{ comment.author.name }}</b></h6>
+                    <p class="card-text">{{ comment.content }}</p>
+                    {% if current_user.id == comment.author_id %}
+                        <div class="btn-group btn-group-justified btn-group-sm">
+                            <form method="post" action="comment/{{ comment.id }}/">
+                                <button class="btn btn-primary btn-sm" type="submit" name="delete" value="delete"
+                                        style="background-color: rgb(166, 204, 240);border-color: aliceblue">
+                                    刪除
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    <div id="replyForm" class="card" style="border:0;background-color: rgb(166, 204, 240);display: none">
+        <div class="card-body">
+            <form action="comment/" method="post">
+                <label for="content" class="sr-only">{{ current_user.name }}</label>
+                <textarea rows="1" id="content" name="content" class="card-text" style="width: 100%"
+                          required></textarea>
+                <button class="btn btn-sm btn-outline-primary" type="submit">送出</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function openReply() {
+            document.getElementById("replyForm").style.display = "flex";
+        }
+
+        function likeToggle() {
+            $.ajax({
+                url: window.location.href + "like/"
+            });
+            if (document.getElementById("like").style.color === "blue") {
+                document.getElementById("like").innerHTML = "讚 " + (parseInt(strip(document.getElementById("like").innerHTML).split(' ')[1]) - 1).toString();
+                document.getElementById("like").style.color = "black";
+            } else {
+                document.getElementById("like").innerHTML = "讚 " + (parseInt(strip(document.getElementById("like").innerHTML).split(' ')[1]) + 1).toString();
+                document.getElementById("like").style.color = "blue";
+            }
+        }
+    </script>
+{% endblock %}

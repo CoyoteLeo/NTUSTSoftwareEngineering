@@ -5,6 +5,7 @@ from werkzeug.utils import redirect
 from controller.absract import BaseController
 from model.Article import Article
 from model.Board import Board
+from model.Like import Like
 
 
 class ArticleController(BaseController):
@@ -12,58 +13,46 @@ class ArticleController(BaseController):
     @login_required
     def new_article(board_id):
         if request.method == 'GET':
-            return '''
-         <form action='' method='POST'>
-         <input type='text' name='title' id='title' placeholder='title'/>
-         <input type='text' name='content' id='content' placeholder='content'/>
-         <input type='submit' name='submit'/>
-         </form>
-                      '''
+            return render_template("article/add.html")
         else:
             title = request.form["title"]
             content = request.form["content"]
             author_id = current_user.id
             article = Article.create(title=title, content=content, author_id=author_id, board_id=board_id)
             if type(article) == str:
-                param = {"error": article}
-                return article
+                return render_template("article/add.html", error=article)
             return redirect(url_for('article', board_id=board_id, article_id=article.id))
 
     @staticmethod
     @login_required
     def article(board_id, article_id):
         article = Article.get(id=article_id)
+        boards = Board.filter(state=1)
+        isLike = Like.exist(article_id=article_id, author_id=current_user.id)
+        result = {
+            "article": article,
+            "boards": boards,
+            "isLike": isLike
+        }
         if article:
-            if current_user.id == article.author_id:
-                if request.method == 'GET':
-                    return f'''
-                            <form action='' method='POST'>
-                                <input type='text' name='title' id='title' value={article.title} placeholder='title'/>
-                                <input type='text' name='content' id='content' value={article.content} placeholder='content'/>
-                                <input type='submit' name='submit'/>
-                            </form>
-                            <form action='' method='POST'>
-                                <input type='submit' name='delete' value="delete"/>
-                            </form>
-                          '''
-                elif request.method == 'POST':
+            if request.method == 'GET':
+                return render_template("article/view.html", **result)
+            if request.method == 'POST' and current_user.id == article.author_id:
+                if request.method == 'POST':
                     if request.form.get("delete", None) == "delete":
-                        article.delete()
-                        if type(article) == str:
-                            param = {"error": article}
-                            return article
+                        result = article.delete()
+                        if type(result) == str:
+                            return render_template("article/view.html", error=result, **result)
                         return redirect(f"/board/{board_id}/")
+                    elif request.form.get("edit", None) == "edit":
+                        return render_template("article/edit.html", **result)
                     else:
                         article.title = request.form["title"]
                         article.content = request.form["content"]
                         article.save()
                         if type(article) == str:
-                            param = {"error": article}
-                            return article
-                        return redirect(url_for("article", board_id=board_id, article_id=article_id))
-            else:
-                return f"<div>{article.title}</div>" \
-                    f"<div>{article.content}<div/>"
+                            return render_template("article/edit.html", error="修改失敗", **result)
+                        return render_template("article/view.html", **result)
         else:
             return redirect("/")
 
