@@ -1,2 +1,1 @@
-release:alembic upgrade head
-web:gunicorn app:app
+web: gunicorn app:app
