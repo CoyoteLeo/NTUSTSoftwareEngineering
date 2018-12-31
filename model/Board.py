@@ -2,6 +2,7 @@ from enum import Enum
 
 import sqlalchemy as  sa
 from flask import request
+from flask_login import current_user
 from sqlalchemy.orm import relationship
 
 from model.BaseModel import BaseModel, update_with_timezone
@@ -32,7 +33,8 @@ class Board(BaseModel):
 
     def approve(self):
         self.state = BoardActiveLevel.active.value
-        return super(Board, self).update()
+        self.admin_id = current_user.id
+        self.save()
 
     @classmethod
     def get_list(cls):

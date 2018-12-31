@@ -1,8 +1,11 @@
 import os
+from functools import wraps
 from importlib import import_module
 
-from flask import Flask
-from flask_login import LoginManager
+from flask import Flask, request, current_app
+from flask_login import LoginManager, current_user
+from flask_login.config import EXEMPT_METHODS
+
 from model.User import User
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,6 +28,20 @@ login_manager = LoginManager(app)
 @login_manager.user_loader
 def user_loader(id):
     return User.get(id=id)
+
+def admin_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        if request.method in EXEMPT_METHODS:
+            return func(*args, **kwargs)
+        elif current_app.login_manager._login_disabled:
+            return func(*args, **kwargs)
+        elif not current_user.is_authenticated:
+            return current_app.login_manager.unauthorized()
+        elif not current_user.is_admin:
+            return current_app.login_manager.unauthorized()
+        return func(*args, **kwargs)
+    return decorated_view
 
 
 login_manager.login_view = "login"

@@ -26,7 +26,7 @@ class UserController(BaseController):
         user = User.get(username=request.form["username"], password=request.form["password"])
         if user:
             login_user(user)
-            return redirect(url_for('board_list'))
+            return redirect(request.values.get("next", "/"))
         else:
             return render_template("login.html", error="登入失敗")
 

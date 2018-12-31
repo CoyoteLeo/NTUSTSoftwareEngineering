@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from werkzeug.utils import redirect
 
 from controller.absract import BaseController
-from app import app
+from app import app, admin_required
 from model.Article import Article
 from model.Board import Board
 
@@ -36,8 +36,22 @@ class BoardController(BaseController):
         boards = Board.filter(state=1)
         return render_template("board/article_list.html", board_id=board_id, articles=articles, boards=boards)
 
+    @staticmethod
+    @admin_required
+    def approved_list():
+        if request.method == "GET":
+            boards = Board.all()
+            return render_template("admin/admin.html", boards=boards)
+        else:
+            board_id = request.form["board_id"]
+            board = Board.get(id=board_id)
+            board.approve()
+            boards = Board.all()
+            return render_template("admin/admin.html", boards=boards)
+
     @classmethod
     def setupUrl(cls):
         app.add_url_rule(rule='/board/', view_func=cls.send_request, methods=["POST", "GET"])
         app.add_url_rule(rule='/board/<int:board_id>/', view_func=cls.article_list, methods=["GET"])
+        app.add_url_rule(rule='/admin/', view_func=cls.approved_list, methods=["GET", "POST"])
         app.add_url_rule(rule='/', view_func=cls.board_list, methods=["GET"])

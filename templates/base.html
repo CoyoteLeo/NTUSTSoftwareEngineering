@@ -33,7 +33,7 @@
     <div class="row" style="background-color: #007BFF;">
         <img class="col-3" src="{{ url_for('static', filename='img/title.png') }}" width="20px" alt=""
              onclick="window.location='/'" style="cursor: pointer">
-        <div class="col-7" style="margin: auto;">
+        <div class="col-6" style="margin: auto;">
             {% block title %}
                 <form action="/article/search/" method="POST">
                     <div class="input-group">
@@ -51,6 +51,7 @@
                 </form>
             {% endblock %}
         </div>
+        <div class="col-1"></div>
         <div class="col-2" style="margin: auto;">
             <a href="/profile/" style="color: white;margin-left: 20px">{{ current_user.name }}</a>
             <button style="margin-left: 20px" type="button" class="btn btn-light" onclick="window.location='\\logout'">

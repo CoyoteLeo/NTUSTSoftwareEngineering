@@ -34,6 +34,10 @@ class User(BaseModel, UserMixin):
     def is_anonymous(self):
         return False
 
+    @property
+    def is_admin(self):
+        return self.level == 1 or self.level == 2
+
     def get_id(self):
         try:
             return self.id
