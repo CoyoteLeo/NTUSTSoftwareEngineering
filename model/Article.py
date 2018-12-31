@@ -24,7 +24,7 @@ class Article(BaseModel):
     author_id = sa.Column('author_id', sa.Integer, sa.ForeignKey("User.id"), nullable=False)
     board_id = sa.Column('board_id', sa.Integer, sa.ForeignKey("Board.id"), nullable=False)
 
-    author = relationship('User', foreign_keys='Article.author_id', backref='article_author_id')
+    author = relationship('User', foreign_keys='Article.author_id', backref='articles')
     board = relationship('Board', foreign_keys='Article.board_id', backref='article_board_id')
 
     @classmethod

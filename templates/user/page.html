@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block header %}
+    <style>
+        .article {
+            padding-bottom: 20px;
+            padding-left: 15px;
+            border-bottom: 2px solid #DFEBF7
+        }
+
+        .article + .article {
+            margin-top: 30px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="row" style="margin-top: 20px">
+        <div class="col-2" style="margin: auto"></div>
+        <div class="col-2" style="margin: auto">
+            {% if current_user.id == user.id %}
+                <form method="post">
+                    <button class="btn btn-primary" type="submit" id="edit" name="edit" value="edit">編輯個人檔案</button>
+                </form>
+            {% endif %}
+            <ul class="list-group" style="margin-top: 20px">
+                <li class="list-group-item">暱稱: {{ user.name }}</li>
+                <li class="list-group-item">信箱: {{ user.email }}</li>
+                <li class="list-group-item">帳號: {{ user.username }}</li>
+                <li class="list-group-item">性別: {{ user.gender }}</li>
+            </ul>
+        </div>
+
+        <div class="col-6">
+            <h2 style="padding-left: 15px;margin-bottom: 10px">動態回顧</h2>
+            <div style="background-color: aliceblue;">
+                {% for article in user.articles %}
+                    <div class="article">
+                        <div style="font-size: smaller;color: #3174A7;display: flex">
+                            <div style="font-style: italic">{{ article.author.name or article.author.username }}&nbsp;&nbsp;&nbsp;</div>
+                            <div>{{ article.created_at.strftime("%m-%d %H:%M") }}</div>
+                        </div>
+                        <div style="font-size: x-large;margin-top: 3px">
+                            <a style="color: #000;"
+                               href="/board/{{ article.board_id }}/article/{{ article.id }}/"><b>{{ article.title }}</b></a>
+                        </div>
+                        <div style="margin-top: 5px;font-size: large">
+                            {{ article.content|truncate(30) }} ...
+                        </div>
+                        <div style="display: flex;margin-top: 20px;font-size: small">
+                            <div>讚 {{ article.likes|length }}&nbsp;&nbsp;&nbsp;</div>
+                            <div>回應 {{ article.comments|length }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-2" style="margin: auto"></div>
+    </div>
+
+{% endblock %}

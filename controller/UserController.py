@@ -39,22 +39,23 @@ class UserController(BaseController):
     @login_required
     def profile():
         if request.method == 'GET':
-            return f'''
-             <form action='' method='POST'>
-             <input type='text' name='name' id='name' value={"" if not current_user.name else current_user.name} placeholder='name'/>
-             <input type='text' name='email' id='email' value={current_user.email} placeholder='email'/>
-             <input type='submit' name='submit'/>
-             </form>
-                          '''
+            user_id = request.values.get("id", None)
+            user = current_user if user_id is None else User.get(id=user_id)
+            return render_template("user/page.html", user=user)
         else:
-            user = User.get(id=current_user.id)
-            user.name = request.form["name"]
-            user.email = request.form["email"]
-            user.save()
-            if type(user) == str:
-                param = {"error": user}
-                return user
-            return redirect(url_for("profile"))
+            if request.form.get("edit", None) == "edit":
+                return render_template("user/profile.html")
+            else:
+                if request.form["username"] != current_user.username and User.exist(name=request.form["username"]):
+                    return render_template("user/profile.html", error="此帳號已被註冊")
+                if request.form["email"] != current_user.email and User.exist(email=request.form["email"]):
+                    return render_template("user/profile.html", error="此信箱已被註冊")
+                current_user.name = request.form["name"]
+                current_user.email = request.form["email"]
+                current_user.username = request.form["username"]
+                current_user.gender = request.form["gender"]
+                current_user.save()
+                return render_template("user/page.html", user=current_user)
 
     @classmethod
     def setupUrl(cls):

@@ -17,6 +17,7 @@ class User(BaseModel, UserMixin):
     email = sa.Column('email', sa.String(120), index=True, unique=True, nullable=False)
     username = sa.Column('username', sa.String(120), index=True, unique=True, nullable=False)
     password = sa.Column('password', sa.String(120), nullable=False)
+    gender = sa.Column('gender', sa.String(20), default="")
     level = sa.Column('level', sa.Integer, default=UserLevel.user.value, index=True)
     last_login = sa.Column('last_login', sa.DateTime(timezone=True), default=update_with_timezone,
                            onupdate=update_with_timezone)

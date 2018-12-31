@@ -31,7 +31,8 @@
 <body>
 <div class="container-fluid" style="background-color: white;height: 100vh">
     <div class="row" style="background-color: #007BFF;">
-        <img class="col-3" src="{{ url_for('static', filename='img/title.png') }}" width="20px" alt="">
+        <img class="col-3" src="{{ url_for('static', filename='img/title.png') }}" width="20px" alt=""
+             onclick="window.location='/'" style="cursor: pointer">
         <div class="col-7" style="margin: auto;">
             {% block title %}
                 <form action="/article/search/" method="POST">
