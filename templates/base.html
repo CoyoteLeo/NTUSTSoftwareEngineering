@@ -30,7 +30,7 @@
 </head>
 <body>
 <div class="container-fluid" style="background-color: white;height: 100vh">
-    <div class="row bg-info" >
+    <div class="row bg-info">
         <img class="col-3" src="{{ url_for('static', filename='img/title.png') }}" width="20px" alt=""
              onclick="window.location='/'" style="cursor: pointer">
         <div class="col-6" style="margin: auto;">
@@ -53,6 +53,9 @@
         </div>
         <div class="col-1"></div>
         <div class="col-2" style="margin: auto;">
+            {% if current_user.is_admin %}
+                <a href="/admin/" style="color: white;margin-left: 20px">管理</a>
+            {% endif %}
             <a href="/profile/" style="color: white;margin-left: 20px">{{ current_user.name }}</a>
             <button style="margin-left: 20px" type="button" class="btn btn-light" onclick="window.location='\\logout'">
                 登出
