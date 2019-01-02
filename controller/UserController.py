@@ -88,7 +88,11 @@ class UserController(BaseController):
             current_user.ad = not current_user.ad
             current_user.save()
             resp = make_response(render_template("user/coin.html"))
-            resp.set_cookie('ad', "1")
+            if current_user.ad:
+                resp.set_cookie('ad', "1", expires=0)
+            else:
+                resp.set_cookie('ad', "1")
+
             return resp
 
     @classmethod
