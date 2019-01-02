@@ -1,14 +1,12 @@
 from enum import Enum
 
 import sqlalchemy as sa
-from sqlalchemy import func
 from sqlalchemy.orm import relationship
 
 from model import session
-from model.BaseModel import BaseModel, update_with_timezone
+from model.BaseModel import BaseModel
 from model.Comment import Comment
 from model.Like import Like
-from model.User import User
 
 
 class BoardActiveLevel(Enum):
@@ -35,3 +33,8 @@ class Article(BaseModel):
     def search_for_title(cls, title):
         result = session.query(Article).filter(Article.title.contains(title))
         return result
+
+    def delete(self, **kwargs):
+        Like.filter(article_id=self.id).delete()
+        Comment.filter(article_id=self.id).delete()
+        super(Article, self).delete()
