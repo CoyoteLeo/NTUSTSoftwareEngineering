@@ -1,4 +1,4 @@
-from flask import url_for, request, render_template
+from flask import url_for, request, render_template, make_response
 from flask_login import logout_user, login_user, current_user, login_required
 from werkzeug.utils import redirect
 
@@ -75,6 +75,18 @@ class UserController(BaseController):
             friend.delete()
             return redirect(request.referrer)
 
+    @staticmethod
+    @login_required
+    def coin():
+        if request.method == "GET":
+            return render_template("user/coin.html")
+        if request.form.get("spend", None) == "spend":
+            current_user.coin_usage += 2
+            current_user.save()
+            resp = make_response(render_template("user/coin.html"))
+            resp.set_cookie('ad', "1")
+            return resp
+
     @classmethod
     def setupUrl(cls):
         app.add_url_rule(rule='/login/', view_func=cls.login, methods=["POST", "GET"])
@@ -82,3 +94,4 @@ class UserController(BaseController):
         app.add_url_rule(rule='/logout/', view_func=cls.logout, methods=["GET"])
         app.add_url_rule(rule='/profile/', view_func=cls.profile, methods=["GET", "POST"])
         app.add_url_rule(rule='/friend/', view_func=cls.friend, methods=["GET", "POST"])
+        app.add_url_rule(rule='/coin/', view_func=cls.coin, methods=["GET", "POST"])

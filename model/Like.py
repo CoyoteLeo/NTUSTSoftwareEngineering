@@ -9,5 +9,5 @@ class Like(BaseModel):
     author_id = sa.Column('author_id', sa.Integer, sa.ForeignKey("User.id"), nullable=False)
     article_id = sa.Column('article_id', sa.Integer, sa.ForeignKey("Article.id"), nullable=False)
 
-    author = relationship('User', foreign_keys='Like.author_id', backref='like_author_id')
+    author = relationship('User', foreign_keys='Like.author_id', backref='user_likes')
     article = relationship('Article', foreign_keys='Like.article_id', backref='likes')

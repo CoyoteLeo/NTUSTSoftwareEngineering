@@ -46,7 +46,9 @@
             {% block main %}{% endblock %}
         </div>
         <div class="col-md-3" style="padding-left: 20px;">
-            <img class="ad" src="{{ url_for('static', filename='img/sup1.png') }}" alt="">
+            {% if not request.cookies.get("ad", None) %}
+                <img class="ad" src="{{ url_for('static', filename='img/sup1.png') }}" alt="">
+            {% endif %}
         </div>
     </div>
 {% endblock %}

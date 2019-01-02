@@ -20,6 +20,7 @@ class User(BaseModel, UserMixin):
     password = sa.Column('password', sa.String(120), nullable=False)
     gender = sa.Column('gender', sa.String(20), default="")
     level = sa.Column('level', sa.Integer, default=UserLevel.user.value, index=True)
+    coin_usage = sa.Column('coin_usage', sa.Integer, default=0)
     last_login = sa.Column('last_login', sa.DateTime(timezone=True), default=update_with_timezone,
                            onupdate=update_with_timezone)
 
