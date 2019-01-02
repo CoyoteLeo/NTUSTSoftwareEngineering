@@ -5,9 +5,9 @@ from model.BaseModel import BaseModel, update_with_timezone
 
 
 class UserLevel(Enum):
-    admin = 1
+    admin = 3
     staff = 2
-    user = 3
+    user = 1
     block = -1
 
 
@@ -36,7 +36,7 @@ class User(BaseModel, UserMixin):
 
     @property
     def is_admin(self):
-        return self.level == 1 or self.level == 2
+        return self.level > 1
 
     def get_id(self):
         try:
@@ -68,7 +68,3 @@ class User(BaseModel, UserMixin):
         elif cls.exist(username=kwargs["username"]):
             return "此帳號已被註冊過了"
         return super(User, cls).create(**kwargs)
-
-    @classmethod
-    def change(cls, new_name, new_email):
-        return "change"
