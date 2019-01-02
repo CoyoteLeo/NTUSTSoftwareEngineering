@@ -85,7 +85,7 @@ class UserController(BaseController):
             return render_template("user/coin.html")
         if request.form.get("spend", None) == "spend":
             current_user.coin_usage += 2
-            current_user.ad = False
+            current_user.ad = not current_user.ad
             current_user.save()
             resp = make_response(render_template("user/coin.html"))
             resp.set_cookie('ad', "1")

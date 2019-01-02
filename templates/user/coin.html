@@ -25,16 +25,26 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td>去廣告</td>
+                            <td>{% if current_user.ad %}去廣告{% else %}我好想看廣告{% endif %}</td>
                             <td>2</td>
                             <td>
                                 {% if current_user.user_likes|length - current_user.coin_usage > 2 %}
-                                    <form action="/coin/" method="POST">
-                                        <button type="submit" name="spend" value="spend"
-                                                class="btn btn-warning">
-                                            兌換
-                                        </button>
-                                    </form>
+                                    {% if current_user.ad %}
+                                        <form action="/coin/" method="POST">
+                                            <button type="submit" name="spend" value="spend"
+                                                    class="btn btn-warning">
+                                                兌換
+                                            </button>
+                                        </form>
+                                    {% else %}
+                                        <form action="/coin/" method="POST">
+                                            <button type="submit" name="spend" value="spend"
+                                                    class="btn btn-warning">
+                                                兌換
+                                            </button>
+                                        </form>
+                                    {% endif %}
+
                                 {% else %}
                                     <button class="btn btn-warning disabled">
                                         兌換
