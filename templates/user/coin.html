@@ -28,7 +28,7 @@
                             <td>{% if current_user.ad %}去廣告{% else %}我好想看廣告{% endif %}</td>
                             <td>2</td>
                             <td>
-                                {% if current_user.user_likes|length - current_user.coin_usage > 2 %}
+                                {% if current_user.user_likes|length - current_user.coin_usage >= 2 %}
                                     {% if current_user.ad %}
                                         <form action="/coin/" method="POST">
                                             <button type="submit" name="spend" value="spend"
