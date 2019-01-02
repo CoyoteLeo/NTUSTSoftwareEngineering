@@ -27,7 +27,10 @@ class UserController(BaseController):
         user = User.get(username=request.form["username"], password=request.form["password"])
         if user:
             login_user(user)
-            return redirect(request.values.get("next", "/"))
+            resp = redirect(request.values.get("next", "/"))
+            if not current_user.ad:
+                resp.set_cookie('ad', "1")
+            return resp
         else:
             return render_template("login.html", error="登入失敗")
 
@@ -82,6 +85,7 @@ class UserController(BaseController):
             return render_template("user/coin.html")
         if request.form.get("spend", None) == "spend":
             current_user.coin_usage += 2
+            current_user.ad = False
             current_user.save()
             resp = make_response(render_template("user/coin.html"))
             resp.set_cookie('ad', "1")

@@ -21,6 +21,7 @@ class User(BaseModel, UserMixin):
     gender = sa.Column('gender', sa.String(20), default="")
     level = sa.Column('level', sa.Integer, default=UserLevel.user.value, index=True)
     coin_usage = sa.Column('coin_usage', sa.Integer, default=0)
+    ad = sa.Column('ad', sa.Boolean, default=True)
     last_login = sa.Column('last_login', sa.DateTime(timezone=True), default=update_with_timezone,
                            onupdate=update_with_timezone)
 
