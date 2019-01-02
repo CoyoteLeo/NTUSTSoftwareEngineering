@@ -22,6 +22,7 @@
 {% endblock %}
 {% block body %}
     <div class="row" style="padding-top: 50px;">
+        <div class="col-md-1"></div>
         <div class="col-md-2">
             <div class="list-group list-group-flush">
                 <a href="/" class="btn board-block text-center"
@@ -41,10 +42,10 @@
             </div>
         </div>
         <div class="col-md-6"
-             style="margin-left:20px;padding:20px 20px 20px 20px;background-color: aliceblue;min-height: 50vh;border-radius: 25px">
+             style="padding:20px 20px 20px 20px;background-color: aliceblue;min-height: 50vh;border-radius: 25px">
             {% block main %}{% endblock %}
         </div>
-        <div class="col-md-3" style="margin-left: 20px;">
+        <div class="col-md-3" style="padding-left: 20px;">
             <img class="ad" src="{{ url_for('static', filename='img/sup1.png') }}" alt="">
         </div>
     </div>
