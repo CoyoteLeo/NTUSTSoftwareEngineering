@@ -35,10 +35,13 @@ class BaseModel(AbstractConcreteBase, Base):
 
     @classmethod
     def create(cls, **kwargs):
-        obj = cls(**kwargs)
-        session.add(obj)
-        session.commit()
-        return obj
+        try:
+            obj = cls(**kwargs)
+            session.add(obj)
+            session.commit()
+            return obj
+        except Exception as e:
+            session.flush()
 
     @classmethod
     def get(cls, order_by=None, **kwargs):
@@ -61,9 +64,15 @@ class BaseModel(AbstractConcreteBase, Base):
         return result
 
     def save(self):
-        session.merge(self)
-        session.commit()
+        try:
+            session.merge(self)
+            session.commit()
+        except Exception as e:
+            session.flush()
 
     def delete(self):
-        session.delete(self)
-        session.commit()
+        try:
+            session.delete(self)
+            session.commit()
+        except Exception as e:
+            session.flush()
