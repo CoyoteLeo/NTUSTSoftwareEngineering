@@ -14,9 +14,52 @@
         <div class="col-2" style="margin: auto"></div>
         <div class="col-2">
             {% if current_user.id == user.id %}
-                <form method="post">
-                    <button class="btn btn-info" type="submit" id="edit" name="edit" value="edit">編輯個人檔案</button>
+                <a class="btn btn-warning" href="/friend/" style="margin-bottom: 10px;width: 100%;">好友列表</a>
+                <form method="post" style="width: 100%">
+                    <button style="width: 100%" class="btn btn-info" type="submit" id="edit" name="edit" value="edit">
+                        編輯個人檔案
+                    </button>
                 </form>
+            {% else %}
+                {% if is_friend %}
+                    {% if is_friend.state == 1 %}
+                        <form action="/friend/" method="post">
+                            <label>
+                                <input type="text" name="delete" value="delete" style="display: none"/>
+                            </label>
+                            <button class="btn btn-warning" type="submit" id="friend_id" name="friend_id"
+                                    value="{{ is_friend.id }}">
+                                刪除好友
+                            </button>
+                        </form>
+                    {% elif is_friend.state == 0 %}
+                        {% if is_friend.user1_id == current_user.id %}
+                            <button class="btn btn-warning disabled" disabled>
+                                已送出邀請
+                            </button>
+                        {% else %}
+                            <form action="/friend/" method="post">
+                                <label>
+                                    <input type="text" name="approve" value="approve" style="display: none"/>
+                                </label>
+                                <button class="btn btn-warning" type="submit" id="friend_id" name="friend_id"
+                                        value="{{ is_friend.id }}">
+                                    確認好友
+                                </button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    <form action="/friend/" method="post">
+                        <label>
+                            <input type="text" name="add" value="add" style="display: none"/>
+                        </label>
+                        <button class="btn btn-warning" type="submit" id="friend_id" name="friend_id"
+                                value="{{ user.id }}">
+                            加為好友
+                        </button>
+                    </form>
+                {% endif %}
             {% endif %}
             <ul class="list-group" style="margin-top: 20px">
                 <li class="list-group-item">暱稱: {{ user.name }}</li>

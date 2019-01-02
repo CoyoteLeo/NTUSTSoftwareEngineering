@@ -1,25 +1,7 @@
 {% extends "board/left_bar.html" %}
-{% block title %}
-    <div>
-        <form action="/article/search/" method="POST">
-            <div class="input-group">
-                <input type="text" class="form-control" id="article_title" name="article_title"
-                       placeholder="文章標題" required
-                       aria-describedby="button-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-info" type="button" id="button-addon2"
-                            onclick="this.form.submit()"
-                            style="border-top-color: white;border-right-color: white;border-bottom-color: white;border-left-color: white;">
-                        搜尋
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
-{% endblock %}
 {% block main %}
+    <h2 align="center">搜尋結果</h2>
     {% for article in articles %}
-        <h2 align="center">搜尋結果</h2>
         <div class="article">
             <div style="font-size: smaller;color: #3174A7;display: flex">
                 <div style="font-style: italic;cursor: pointer"

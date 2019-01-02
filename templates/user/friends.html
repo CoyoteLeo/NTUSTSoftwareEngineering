@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block header %}
+{% endblock %}
+{% block body %}
+    <div class="row" style="padding-top: 20px;">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h1 align="center">朋友列表</h1>
+            <div class="text-center">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">名稱</th>
+                        <th scope="col">送出時間</th>
+                        <th scope="col">加為好友時間/確認</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for friend in user.friends1 %}
+                        <tr>
+                            <td>
+                                <div onclick="window.location='/profile/?id={{ friend.user2_id }}'"
+                                     style="cursor: pointer">
+                                    {{ friend.user2.name }}
+                                </div>
+                            </td>
+                            <td>{{ friend.created_at.strftime("%m-%d %H:%M") }}</td>
+                            <td>
+                                {% if friend.state == 0 %}
+                                    {% if friend.user2_id ==user.id %}
+                                        <form action="/friend/" method="POST">
+                                            <label>
+                                                <input type="text" name="approve" value="approve"
+                                                       style="display: none"/>
+                                            </label>
+                                            <button type="submit" name="friend_id" value="{{ friend.id }}"
+                                                    class="btn btn-warning">
+                                                確認
+                                            </button>
+                                        </form>
+                                    {% else %}
+                                        <button class="btn btn-warning disabled">
+                                            已送出邀請
+                                        </button>
+                                    {% endif %}
+                                {% else %}
+                                    {{ friend.updated_at.strftime("%m-%d %H:%M") }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for friend in user.friends2 %}
+                        <tr>
+                            <td>{{ friend.user1.name }}</td>
+                            <td>{{ friend.created_at.strftime("%m-%d %H:%M") }}</td>
+                            <td>
+                                {% if friend.state == 0 %}
+                                    <form action="/approve_friend/" method="POST">
+                                        <button type="submit" name="friend_id" value="{{ friend.id }}"
+                                                class="btn btn-warning">
+                                            確認
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    {{ friend.updated_at.strftime("%m-%d %H:%M") }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+{% endblock %}

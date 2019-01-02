@@ -1,7 +1,8 @@
 from enum import Enum
 import sqlalchemy as  sa
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 from model.BaseModel import BaseModel, update_with_timezone
+from model.Friend import Friend
 
 
 class UserLevel(Enum):
@@ -21,6 +22,11 @@ class User(BaseModel, UserMixin):
     level = sa.Column('level', sa.Integer, default=UserLevel.user.value, index=True)
     last_login = sa.Column('last_login', sa.DateTime(timezone=True), default=update_with_timezone,
                            onupdate=update_with_timezone)
+
+    @property
+    def is_friend(self):
+        return Friend.get(user1_id=current_user.id, user2_id=self.id) \
+               or Friend.get(user2_id=current_user.id, user1_id=self.id)
 
     @property
     def is_active(self):
