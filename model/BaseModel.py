@@ -29,8 +29,7 @@ class BaseModel(AbstractConcreteBase, Base):
 
     _session = None
     id = Column('id', Integer, primary_key=True, autoincrement=True, index=True)
-    created_at = Column('created_at', DateTime(timezone=True), default=update_with_timezone,
-                        onupdate=update_with_timezone)
+    created_at = Column('created_at', DateTime(timezone=True), default=update_with_timezone)
     updated_at = Column('updated_at', DateTime(timezone=True), default=update_with_timezone,
                         onupdate=update_with_timezone)
 

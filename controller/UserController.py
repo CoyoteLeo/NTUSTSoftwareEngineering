@@ -4,6 +4,7 @@ from werkzeug.utils import redirect
 
 from controller.absract import BaseController
 from app import app
+from model.Card import Card
 from model.Friend import Friend
 from model.User import User
 
@@ -83,7 +84,7 @@ class UserController(BaseController):
     def coin():
         if request.method == "GET":
             return render_template("user/coin.html")
-        if request.form.get("spend", None) == "spend":
+        elif request.form.get("spend", None) == "spend":
             current_user.coin_usage += 2
             current_user.ad = not current_user.ad
             current_user.save()
@@ -92,8 +93,19 @@ class UserController(BaseController):
                 resp.set_cookie('ad', "1", expires=0)
             else:
                 resp.set_cookie('ad', "1")
-
             return resp
+        elif request.form.get("card", None) == "card":
+            current_user.coin_usage += 5
+            current_user.save()
+            Card.get(user_id=current_user.id).update_target()
+            return redirect("/card/")
+
+    @staticmethod
+    @login_required
+    def card():
+        if request.method == "GET":
+            card = Card.get(user_id=current_user.id)
+            return render_template("user/card.html", card=card)
 
     @classmethod
     def setupUrl(cls):
@@ -103,3 +115,4 @@ class UserController(BaseController):
         app.add_url_rule(rule='/profile/', view_func=cls.profile, methods=["GET", "POST"])
         app.add_url_rule(rule='/friend/', view_func=cls.friend, methods=["GET", "POST"])
         app.add_url_rule(rule='/coin/', view_func=cls.coin, methods=["GET", "POST"])
+        app.add_url_rule(rule='/card/', view_func=cls.card, methods=["GET"])

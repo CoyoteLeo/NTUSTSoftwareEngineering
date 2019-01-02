@@ -24,8 +24,7 @@ def upgrade():
     op.create_table(
         'Friend',
         sa.Column('id', sa.Integer, primary_key=True, autoincrement=True, index=True),
-        sa.Column('created_at', sa.DateTime(timezone=True), default=update_with_timezone,
-                  onupdate=update_with_timezone),
+        sa.Column('created_at', sa.DateTime(timezone=True), default=update_with_timezone),
         sa.Column('updated_at', sa.DateTime(timezone=True), default=update_with_timezone,
                   onupdate=update_with_timezone),
         sa.Column('user1_id', sa.Integer, sa.ForeignKey("User.id"), nullable=False),
