@@ -56,6 +56,10 @@
                             <td>
                                 {% if friend.state == 0 %}
                                     <form action="/friend/" method="POST">
+                                        <label>
+                                            <input type="text" name="approve" value="approve"
+                                                   style="display: none"/>
+                                        </label>
                                         <button type="submit" name="friend_id" value="{{ friend.id }}"
                                                 class="btn btn-warning">
                                             確認
