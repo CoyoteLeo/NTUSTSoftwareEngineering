@@ -14,13 +14,13 @@
         {% if current_user.id == article.author_id %}
             <div style="float: right" class="btn-group btn-group-justified btn-group-sm pull-right">
                 <form method="post">
-                    <button class="btn btn-sm btn-outline-primary" type="submit" name="edit" value="edit"
+                    <button class="btn btn-sm btn-outline-info" type="submit" name="edit" value="edit"
                             style="color: rgb(166, 204, 240);border-color: rgb(166, 204, 240)">
                         編輯
                     </button>
                 </form>
                 <form method="post">
-                    <button class="btn btn-sm btn-outline-primary" type="submit" name="delete" value="delete"
+                    <button class="btn btn-sm btn-outline-info" type="submit" name="delete" value="delete"
                             style="color: rgb(166, 204, 240);border-color: rgb(166, 204, 240)">
                         刪除
                     </button>
@@ -30,9 +30,7 @@
     </div>
     <HR color=white size="3" width="50%" align="left">
     <h3>{{ article.title }}</h3>
-    <h6>
-        {{ article.content }}
-    </h6>
+    <pre class="h6" style="margin-top: 10px;white-space: pre-wrap;overflow-y: hidden;">{{ article.content }}</pre>
     <HR color=white size="3" align="left" style="margin-bottom: 0">
     <div style="display: flex;">
         {% if isLike %}
@@ -61,7 +59,7 @@
                     {% if current_user.id == comment.author_id %}
                         <div class="btn-group btn-group-justified btn-group-sm">
                             <form method="post" action="comment/{{ comment.id }}/">
-                                <button class="btn btn-primary btn-sm" type="submit" name="delete" value="delete"
+                                <button class="btn btn-info btn-sm" type="submit" name="delete" value="delete"
                                         style="background-color: #A6CCA8;border-color: aliceblue">
                                     刪除
                                 </button>
@@ -78,7 +76,7 @@
                     {% if current_user.id == comment.author_id %}
                         <div class="btn-group btn-group-justified btn-group-sm">
                             <form method="post" action="comment/{{ comment.id }}/">
-                                <button class="btn btn-primary btn-sm" type="submit" name="delete" value="delete"
+                                <button class="btn btn-info btn-sm" type="submit" name="delete" value="delete"
                                         style="background-color: #A6CCA8;border-color: aliceblue">
                                     刪除
                                 </button>
@@ -95,7 +93,7 @@
                 <label for="content" class="sr-only">{{ current_user.name }}</label>
                 <textarea rows="1" id="content" name="content" class="card-text" style="width: 100%"
                           required></textarea>
-                <button class="btn btn-sm btn-outline-primary" type="submit">送出</button>
+                <button class="btn btn-sm btn-outline-info" type="submit">送出</button>
             </form>
         </div>
     </div>

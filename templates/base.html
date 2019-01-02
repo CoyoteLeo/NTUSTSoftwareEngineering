@@ -30,7 +30,7 @@
 </head>
 <body>
 <div class="container-fluid" style="background-color: white;height: 100vh">
-    <div class="row" style="background-color: #007BFF;">
+    <div class="row bg-info" >
         <img class="col-3" src="{{ url_for('static', filename='img/title.png') }}" width="20px" alt=""
              onclick="window.location='/'" style="cursor: pointer">
         <div class="col-6" style="margin: auto;">
@@ -41,7 +41,7 @@
                                placeholder="文稱標題" required
                                aria-describedby="button-addon2">
                         <div class="input-group-append">
-                            <button class="btn btn-primary" type="button" id="button-addon2"
+                            <button class="btn btn-info" type="button" id="button-addon2"
                                     onclick="this.form.submit()"
                                     style="border-top-color: white;border-right-color: white;border-bottom-color: white;border-left-color: white;">
                                 搜尋
