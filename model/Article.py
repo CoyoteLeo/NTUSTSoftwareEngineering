@@ -3,10 +3,12 @@ from enum import Enum
 import sqlalchemy as sa
 from sqlalchemy.orm import relationship
 
-from model import session
+from model import DB_Session
 from model.BaseModel import BaseModel
 from model.Comment import Comment
 from model.Like import Like
+
+session = DB_Session()
 
 
 class BoardActiveLevel(Enum):
