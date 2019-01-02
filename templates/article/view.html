@@ -39,13 +39,13 @@
             <div id="like" class="btn2 text-center"
                  style="border-right: 1px solid rgba(0,0,0,.1);padding-top: 16px;padding-bottom: 16px;color: blue"
                  onclick="likeToggle()">
-                讚 {{ article.comments|length }}
+                讚 {{ article.likes|length }}
             </div>
         {% else %}
             <div id="like" class="btn2 text-center"
                  style="border-right: 1px solid rgba(0,0,0,.1);padding-top: 16px;padding-bottom: 16px;color: black"
                  onclick="likeToggle()">
-                讚 {{ article.comments|length }}
+                讚 {{ article.likes|length }}
             </div>
         {% endif %}
 
@@ -62,7 +62,7 @@
                         <div class="btn-group btn-group-justified btn-group-sm">
                             <form method="post" action="comment/{{ comment.id }}/">
                                 <button class="btn btn-primary btn-sm" type="submit" name="delete" value="delete"
-                                        style="background-color: rgb(166, 204, 240);border-color: aliceblue">
+                                        style="background-color: #A6CCA8;border-color: aliceblue">
                                     刪除
                                 </button>
                             </form>
@@ -79,7 +79,7 @@
                         <div class="btn-group btn-group-justified btn-group-sm">
                             <form method="post" action="comment/{{ comment.id }}/">
                                 <button class="btn btn-primary btn-sm" type="submit" name="delete" value="delete"
-                                        style="background-color: rgb(166, 204, 240);border-color: aliceblue">
+                                        style="background-color: #A6CCA8;border-color: aliceblue">
                                     刪除
                                 </button>
                             </form>
@@ -89,7 +89,7 @@
             </div>
         {% endif %}
     {% endfor %}
-    <div id="replyForm" class="card" style="border:0;background-color: rgb(166, 204, 240);display: none">
+    <div id="replyForm" class="card" style="border:0;background-color: #A6CCA8;display: none">
         <div class="card-body">
             <form action="comment/" method="post">
                 <label for="content" class="sr-only">{{ current_user.name }}</label>
