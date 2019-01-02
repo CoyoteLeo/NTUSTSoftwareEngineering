@@ -55,7 +55,7 @@
                             <td>{{ friend.created_at.strftime("%m-%d %H:%M") }}</td>
                             <td>
                                 {% if friend.state == 0 %}
-                                    <form action="/approve_friend/" method="POST">
+                                    <form action="/approve/" method="POST">
                                         <button type="submit" name="friend_id" value="{{ friend.id }}"
                                                 class="btn btn-warning">
                                             確認
