@@ -46,13 +46,10 @@ class UserController(BaseController):
             if request.form.get("edit", None) == "edit":
                 return render_template("user/profile.html")
             else:
-                if request.form["username"] != current_user.username and User.exist(name=request.form["username"]):
-                    return render_template("user/profile.html", error="此帳號已被註冊")
                 if request.form["email"] != current_user.email and User.exist(email=request.form["email"]):
                     return render_template("user/profile.html", error="此信箱已被註冊")
                 current_user.name = request.form["name"]
                 current_user.email = request.form["email"]
-                current_user.username = request.form["username"]
                 current_user.gender = request.form["gender"]
                 current_user.save()
                 return render_template("user/page.html", user=current_user)
