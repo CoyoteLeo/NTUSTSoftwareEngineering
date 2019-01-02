@@ -3,6 +3,5 @@ from sqlalchemy.orm import sessionmaker
 
 from env_production import DATABASE_URL, DEBUG
 
-engine = create_engine(DATABASE_URL, echo=DEBUG, pool_size=5, max_overflow=13)
+engine = create_engine(DATABASE_URL, pool_size=10, max_overflow=5)
 DB_Session = sessionmaker(bind=engine,)
-session = DB_Session()

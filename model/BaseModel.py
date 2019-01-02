@@ -3,8 +3,9 @@ from sqlalchemy import Column, Integer, DateTime, literal
 import datetime
 import pytz
 
-from model import session, DB_Session
+from model import DB_Session
 
+session = DB_Session()
 Base = declarative_base()
 
 
@@ -41,7 +42,7 @@ class BaseModel(AbstractConcreteBase, Base):
             session.commit()
             return obj
         except Exception as e:
-            session.flush()
+            session.rollback()
             raise e
 
     @classmethod
@@ -69,7 +70,7 @@ class BaseModel(AbstractConcreteBase, Base):
             session.merge(self)
             session.commit()
         except Exception as e:
-            session.flush()
+            session.rollback()
             raise e
 
     def delete(self):
@@ -77,5 +78,5 @@ class BaseModel(AbstractConcreteBase, Base):
             session.delete(self)
             session.commit()
         except Exception as e:
-            session.flush()
+            session.rollback()
             raise e
