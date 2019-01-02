@@ -35,7 +35,7 @@
     <div style="display: flex;">
         {% if isLike %}
             <div id="like" class="btn2 text-center"
-                 style="border-right: 1px solid rgba(0,0,0,.1);padding-top: 16px;padding-bottom: 16px;color: blue"
+                 style="border-right: 1px solid rgba(0,0,0,.1);padding-top: 16px;padding-bottom: 16px;color: rgb(23, 162, 184)"
                  onclick="likeToggle()">
                 讚 {{ article.likes|length }}
             </div>
@@ -106,12 +106,12 @@
             $.ajax({
                 url: window.location.href + "like/"
             });
-            if (document.getElementById("like").style.color === "blue") {
+            if (document.getElementById("like").style.color === "rgb(23, 162, 184)") {
                 document.getElementById("like").innerHTML = "讚 " + (parseInt(strip(document.getElementById("like").innerHTML).split(' ')[1]) - 1).toString();
                 document.getElementById("like").style.color = "black";
             } else {
                 document.getElementById("like").innerHTML = "讚 " + (parseInt(strip(document.getElementById("like").innerHTML).split(' ')[1]) + 1).toString();
-                document.getElementById("like").style.color = "blue";
+                document.getElementById("like").style.color = "rgb(23, 162, 184)";
             }
         }
     </script>
