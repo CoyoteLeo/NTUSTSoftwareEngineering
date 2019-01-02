@@ -42,6 +42,7 @@ class BaseModel(AbstractConcreteBase, Base):
             return obj
         except Exception as e:
             session.flush()
+            raise e
 
     @classmethod
     def get(cls, order_by=None, **kwargs):
@@ -69,6 +70,7 @@ class BaseModel(AbstractConcreteBase, Base):
             session.commit()
         except Exception as e:
             session.flush()
+            raise e
 
     def delete(self):
         try:
@@ -76,3 +78,4 @@ class BaseModel(AbstractConcreteBase, Base):
             session.commit()
         except Exception as e:
             session.flush()
+            raise e
