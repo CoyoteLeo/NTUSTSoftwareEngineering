@@ -38,10 +38,16 @@ class Card(BaseModel):
     def get(cls, order_by=None, **kwargs):
         instance = cls.filter(order_by=order_by, **kwargs).first()
         if not instance:
-            instance = cls(user_id=current_user.id)
+            total = session.query(count(User.id).label("count")).select_from(User).first().count - 2
+            target = session.query(User) \
+                .filter(User.id != current_user.id) \
+                .offset(random.randint(0, total)) \
+                .limit(1) \
+                .first()
+            instance = cls(user_id=current_user.id, target_id=target.id)
             instance.update_target()
             return instance
-        if (instance.updated_at + datetime.timedelta(days=1) - datetime.datetime.now(
-                pytz.timezone("Asia/Taipei"))).seconds >= 86400:
+        if ((instance.updated_at + datetime.timedelta(days=1))
+            - datetime.datetime.now(pytz.timezone("Asia/Taipei"))).seconds >= 86400:
             instance.update_target()
         return instance
