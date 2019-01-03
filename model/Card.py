@@ -44,8 +44,7 @@ class Card(BaseModel):
                 .offset(random.randint(0, total)) \
                 .limit(1) \
                 .first()
-            instance = cls(user_id=current_user.id, target_id=target.id)
-            instance.update_target()
+            instance = cls.create(user_id=current_user.id, target_id=target.id)
             return instance
         if ((instance.updated_at + datetime.timedelta(days=1))
             - datetime.datetime.now(pytz.timezone("Asia/Taipei"))).seconds >= 86400:
