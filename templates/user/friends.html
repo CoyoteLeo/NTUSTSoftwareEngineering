@@ -51,7 +51,10 @@
                     {% endfor %}
                     {% for friend in user.friends2 %}
                         <tr>
-                            <td>{{ friend.user1.name }}</td>
+                            <td><div onclick="window.location='/profile/?id={{ friend.user2_id }}'"
+                                     style="cursor: pointer">
+                                    {{ friend.user1.name }}
+                                </div></td>
                             <td>{{ friend.created_at.strftime("%m-%d %H:%M") }}</td>
                             <td>
                                 {% if friend.state == 0 %}

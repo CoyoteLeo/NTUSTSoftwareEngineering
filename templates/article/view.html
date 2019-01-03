@@ -9,7 +9,9 @@
         }
     </style>
     <div>
-        <span style="font-size: small; ">{{ article.author.name }}</span>&nbsp
+        <div style="font-style: italic;cursor: pointer"
+             onclick="window.location='/profile/?id={{ article.author_id }}'">{{ article.author.name or article.author.name }}
+        </div>&nbsp
         <span style="font-size: xx-small; color: gray; "><i>{{ article.created_at.strftime("%Y/%m/%d") }}</i></span>
         {% if current_user.id == article.author_id %}
             <div style="float: right" class="btn-group btn-group-justified btn-group-sm pull-right">
