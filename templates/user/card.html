@@ -23,7 +23,7 @@
         $(function () {
             setTimeout(function () {
                 $("#loading")[0].innerHTML = '<img style="margin: auto;display: block;max-width: 650px;max-height: 540px;" align="center"' +
-                    'src="/static/img/' + ({{ card.target_id%6 }}).toString() + '.jpg" alt="">';
+                    'src="/static/img/' + ({{ card.target_id%6 + 1 }}).toString() + '.jpg" alt="">';
                 console.log(3)
             }, 2000)
         });
