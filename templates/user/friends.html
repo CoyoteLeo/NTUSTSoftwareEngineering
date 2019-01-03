@@ -51,7 +51,7 @@
                     {% endfor %}
                     {% for friend in user.friends2 %}
                         <tr>
-                            <td><div onclick="window.location='/profile/?id={{ friend.user2_id }}'"
+                            <td><div onclick="window.location='/profile/?id={{ friend.user1_id }}'"
                                      style="cursor: pointer">
                                     {{ friend.user1.name }}
                                 </div></td>
