@@ -9,7 +9,7 @@
 |CoyoteLeo|B10532013 林佑恩|
 |weeturn|B10532001 黃哲韋|
 |BuddistCoding|B10532024 王繹崴|
-|CoyoteLeo|B10532013 林佑恩|
+|hamchick|B10532008 黃信恩|
 |CoyoteLeo|B10532013 林佑恩|
 
 clone github repository
