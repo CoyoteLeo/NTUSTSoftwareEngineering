@@ -4,7 +4,7 @@
         .article {
             padding-bottom: 20px;
             padding-left: 15px;
-            border-bottom: 2px solid #DFEBF7;
+            border-bottom: 2px solid violet;
             margin-top: 30px;
         }
     </style>
@@ -29,14 +29,14 @@
                             <label>
                                 <input type="text" name="delete" value="delete" style="display: none"/>
                             </label>
-                            <button class="btn btn-warning" type="submit" id="friend_id" name="friend_id"
+                            <button class="btn btn-dark" type="submit" id="friend_id" name="friend_id"
                                     value="{{ is_friend.id }}">
                                 刪除好友
                             </button>
                         </form>
                     {% elif is_friend.state == 0 %}
                         {% if is_friend.user1_id == current_user.id %}
-                            <button class="btn btn-warning disabled" disabled>
+                            <button class="btn btn-dark disabled" disabled>
                                 已送出邀請
                             </button>
                         {% else %}
@@ -44,7 +44,7 @@
                                 <label>
                                     <input type="text" name="approve" value="approve" style="display: none"/>
                                 </label>
-                                <button class="btn btn-warning" type="submit" id="friend_id" name="friend_id"
+                                <button class="btn btn-dark" type="submit" id="friend_id" name="friend_id"
                                         value="{{ is_friend.id }}">
                                     確認好友
                                 </button>
@@ -56,7 +56,7 @@
                         <label>
                             <input type="text" name="add" value="add" style="display: none"/>
                         </label>
-                        <button class="btn btn-warning" type="submit" id="friend_id" name="friend_id"
+                        <button class="btn btn-dark" type="submit" id="friend_id" name="friend_id"
                                 value="{{ user.id }}">
                             加為好友
                         </button>
@@ -72,10 +72,10 @@
         </div>
         <div class="col-6">
             <h2 style="padding-left: 15px;margin-bottom: 10px">動態回顧</h2>
-            <div style="background-color: aliceblue;">
+            <div style="background-color: blue;">
                 {% for article in user.articles %}
                     <div class="article">
-                        <div style="font-size: smaller;color: #3174A7;display: flex">
+                        <div style="font-size: smaller;color: #3174B7;display: flex">
                             <div style="font-style: italic;cursor: pointer"
                                  onclick="window.location='/profile/?id={{ article.author_id }}'">{{ article.author.name or article.author.username }}
                             </div>&nbsp;&nbsp;&nbsp;

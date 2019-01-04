@@ -29,7 +29,7 @@
     {% block header %}{% endblock %}
 </head>
 <body>
-<div class="container-fluid" style="background-color: white;min-height: 100vh;margin-bottom: 20px;">
+<div class="container-fluid" style="background-color: rgb(116, 8, 204);min-height: 100vh;margin-bottom: 20px;">
     <div class="row bg-info">
         <img class="col-3" src="{{ url_for('static', filename='img/title.png') }}" width="20px" alt=""
              onclick="window.location='/'" style="cursor: pointer">
@@ -43,7 +43,7 @@
                         <div class="input-group-append">
                             <button class="btn btn-info" type="button" id="button-addon2"
                                     onclick="this.form.submit()"
-                                    style="border-top-color: white;border-right-color: white;border-bottom-color: white;border-left-color: white;">
+                                    style="border-top-color: rgb(225, 241, 129);border-right-color: rgb(28, 136, 122);border-bottom-color: white;border-left-color: white;">
                                 搜尋
                             </button>
                         </div>
@@ -56,7 +56,7 @@
                 <a href="/admin/" style="color: white;margin-left: 20px">管理</a>
             {% endif %}
             <a href="/profile/" style="color: white;margin-left: 20px">{{ current_user.name }}</a>
-            <button style="margin-left: 20px" type="button" class="btn btn-light" onclick="window.location='\\logout'">
+            <button style="margin-left: 20px" type="button" class="btn btn-dark" onclick="window.location='\\logout'">
                 登出
             </button>
         </div>

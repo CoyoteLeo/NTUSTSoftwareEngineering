@@ -4,7 +4,7 @@
         .article {
             padding-bottom: 20px;
             padding-left: 15px;
-            border-bottom: 2px solid #DFEBF7
+            border-bottom: 2px solid #DFEAF7
         }
 
         .article + .article {
@@ -26,7 +26,7 @@
         <div class="col-md-2">
             <div class="list-group list-group-flush">
                 <a href="/" class="btn board-block text-center"
-                   style="border-radius: 10px;border: none;color: black">
+                   style="border-radius: 10px;border: none;color: brown">
                     <b>看板列表</b>
                 </a>
                 {% for board in boards %}
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="col-md-6"
-             style="padding:20px 20px 20px 20px;background-color: aliceblue;min-height: 50vh;border-radius: 25px">
+             style="padding:20px 20px 20px 20px;background-color: blue;min-height: 50vh;border-radius: 25px">
             {% block main %}{% endblock %}
         </div>
         <div class="col-md-3" style="padding-left: 20px;">

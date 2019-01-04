@@ -3,7 +3,7 @@
     <h2 align="center">搜尋結果</h2>
     {% for article in articles %}
         <div class="article">
-            <div style="font-size: smaller;color: #3174A7;display: flex">
+            <div style="font-size: smaller;color: #31A4A7;display: flex">
                 <div style="font-style: italic;cursor: pointer"
                      onclick="window.location='/profile/?id={{ article.author_id }}'">{{ article.author.name or article.author.username }}&nbsp;&nbsp;&nbsp;
                 </div>

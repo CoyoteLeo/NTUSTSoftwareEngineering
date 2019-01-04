@@ -12,18 +12,18 @@
         <div style="font-style: italic;cursor: pointer"
              onclick="window.location='/profile/?id={{ article.author_id }}'">{{ article.author.name or article.author.name }}
         </div>&nbsp
-        <span style="font-size: xx-small; color: gray; "><i>{{ article.created_at.strftime("%Y/%m/%d") }}</i></span>
+        <span style="font-size: xx-small; color: darkgray; "><i>{{ article.created_at.strftime("%Y/%m/%d") }}</i></span>
         {% if current_user.id == article.author_id %}
             <div style="float: right" class="btn-group btn-group-justified btn-group-sm pull-right">
                 <form method="post">
                     <button class="btn btn-sm btn-outline-info" type="submit" name="edit" value="edit"
-                            style="color: rgb(166, 204, 240);border-color: rgb(166, 204, 240)">
+                            style="color: rgb(6, 38, 68);border-color: rgb(50, 150, 243)">
                         編輯
                     </button>
                 </form>
                 <form method="post">
                     <button class="btn btn-sm btn-outline-info" type="submit" name="delete" value="delete"
-                            style="color: rgb(166, 204, 240);border-color: rgb(166, 204, 240)">
+                            style="color: rgb(6, 38, 68);border-color: rgb(50, 150, 243)">
                         刪除
                     </button>
                 </form>
@@ -54,7 +54,7 @@
     <HR color=white size="3" align="left" style="margin-top: 0">
     {% for comment in article.comments %}
         {% if loop.index0 % 2 == 0 %}
-            <div class="card" style="border:0;background-color: #DFECF9">
+            <div class="card" style="border:0;background-color: rgb(176, 211, 246)">
                 <div class="card-body">
                     <h6 class="card-title"><b>{{ comment.author.name }}</b></h6>
                     <p class="card-text">{{ comment.content }}</p>
@@ -62,7 +62,7 @@
                         <div class="btn-group btn-group-justified btn-group-sm">
                             <form method="post" action="comment/{{ comment.id }}/">
                                 <button class="btn btn-info btn-sm" type="submit" name="delete" value="delete"
-                                        style="background-color: #A6CCA8;border-color: aliceblue">
+                                        style="background-color: #A6ACA8;border-color: blue">
                                     刪除
                                 </button>
                             </form>
@@ -79,7 +79,7 @@
                         <div class="btn-group btn-group-justified btn-group-sm">
                             <form method="post" action="comment/{{ comment.id }}/">
                                 <button class="btn btn-info btn-sm" type="submit" name="delete" value="delete"
-                                        style="background-color: #A6CCA8;border-color: aliceblue">
+                                        style="background-color: #A6ACA8;border-color: blue">
                                     刪除
                                 </button>
                             </form>
@@ -89,7 +89,7 @@
             </div>
         {% endif %}
     {% endfor %}
-    <div id="replyForm" class="card" style="border:0;background-color: #A6CCA8;display: none">
+    <div id="replyForm" class="card" style="border:0;background-color: #A6ACA8;display: none">
         <div class="card-body">
             <form action="comment/" method="post">
                 <label for="content" class="sr-only">{{ current_user.name }}</label>
