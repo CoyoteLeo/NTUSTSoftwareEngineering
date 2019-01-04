@@ -1,0 +1,21 @@
+{% extends "board/left_bar.html" %}
+{% block main %}
+    <h2 align="center">搜尋結果</h2>
+    {% for article in articles %}
+        <div class="article">
+            <div style="font-size: smaller;color: #31A4A7;display: flex">
+                <div style="font-style: italic;cursor: pointer"
+                     onclick="window.location='/profile/?id={{ article.author_id }}'">{{ article.author.name or article.author.username }}&nbsp;&nbsp;&nbsp;
+                </div>
+                <div>{{ article.created_at.strftime("%m-%d %H:%M") }}</div>
+            </div>
+            <div style="font-size: x-large;margin-top: 3px">
+                <a style="color: #000;"
+                   href="/board/{{ article.board_id }}/article/{{ article.id }}/"><b>{{ article.title }}</b></a>
+            </div>
+            <div style="margin-top: 5px;font-size: large">
+                {{ article.content|truncate(30) }} ...
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
