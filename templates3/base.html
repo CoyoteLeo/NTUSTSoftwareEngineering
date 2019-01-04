@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mr.Zhao</title>
+    <link rel="icon" href="{{ url_for("static",filename="img/icon.png") }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+    <script>
+        function strip(str) {
+            return str.replace(/^\s+|\s+$/g, '');
+        }
+    </script>
+    <style>
+        body {
+            font-family: "微軟正黑體", "Microsoft JhengHei", "Segoe UI Semibold", "Segoe UI", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+        }
+    </style>
+    {% block header %}{% endblock %}
+</head>
+<body>
+<div class="container-fluid" style="background-color:#1b2125;min-height: 100vh;margin-bottom: 20px;">
+    <div class="row bg-dark">
+        <img class="col-3" src="{{ url_for('static', filename='img/title.png') }}" width="20px" alt=""
+             onclick="window.location='/'" style="cursor: pointer">
+        <div class="col-6" style="margin: auto;">
+            {% block title %}
+                <form action="/article/search/" method="POST">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="article_title" name="article_title"
+                               placeholder="文章標題" required
+                               aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-dark" type="button" id="button-addon2"
+                                    onclick="this.form.submit()"
+                                    style="border-top-color: white;border-right-color: white;border-bottom-color: white;border-left-color: white;">
+                                搜尋
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            {% endblock %}
+        </div>
+        <div class="col-3" style="margin: auto;">
+            {% if current_user.is_admin %}
+                <a href="/admin/" style="color: white;margin-left: 20px">管理</a>
+            {% endif %}
+            <a href="/profile/" style="color: white;margin-left: 20px">{{ current_user.name }}</a>
+            <button style="margin-left: 20px" type="button" class="btn btn-light" onclick="window.location='\\logout'">
+                登出
+            </button>
+        </div>
+    </div>
+    {% block body %}{% endblock %}
+</div>
+<script>
+    {% if error %}
+        alert("{{ error }}");
+    {% endif %}
+</script>
+</body>
+</html>

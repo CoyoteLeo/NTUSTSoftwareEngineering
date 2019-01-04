@@ -1,0 +1,120 @@
+{% extends "board/left_bar.html" %}
+{% block main %}
+    <style>
+        .btn2 {
+            cursor: pointer;
+            width: 50%;
+            font-size: .875rem;
+            line-height: 1;
+        }
+    </style>
+    <div>
+        <div style="font-style: italic;cursor: pointer;color: white"
+             onclick="window.location='/profile/?id={{ article.author_id }}'">{{ article.author.name or article.author.name }}
+        </div>&nbsp
+        <span style="font-size: xx-small; color: gray; "><i>{{ article.created_at.strftime("%Y/%m/%d") }}</i></span>
+        {% if current_user.id == article.author_id %}
+            <div style="float: right" class="btn-group btn-group-justified btn-group-sm pull-right">
+                <form method="post">
+                    <button class="btn btn-sm btn-outline-dark" type="submit" name="edit" value="edit"
+                            style="color: rgb(255, 255, 255);border-color: rgb(255, 255, 255)">
+                        編輯
+                    </button>
+                </form>
+                <form method="post">
+                    <button class="btn btn-sm btn-outline-dark" type="submit" name="delete" value="delete"
+                            style="color: rgb(255, 255, 255);border-color: rgb(255, 255, 255)">
+                        刪除
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+    <HR color=white size="3" width="50%" align="left" style="background-color:white">
+    <h3 style="color:white">{{ article.title }}</h3>
+    <pre class="h6" style="margin-top: 10px;white-space: pre-wrap;overflow-y: hidden;color: white">{{ article.content }}</pre>
+    <HR color=white size="3" align="left" style="margin-bottom: 0;background-color:white">
+    <div style="display: flex;">
+        {% if isLike %}
+            <div id="like" class="btn2 text-center"
+                 style="border-right: 1px solid rgb(255, 255, 255);padding-top: 16px;padding-bottom: 16px;color: rgb(255, 193, 7)"
+                 onclick="likeToggle()">
+                讚 {{ article.likes|length }}
+            </div>
+        {% else %}
+            <div id="like" class="btn2 text-center"
+                 style="border-right: 1px solid rgb(255, 255, 255);padding-top: 16px;padding-bottom: 16px;color: rgb(255, 255, 255)"
+                 onclick="likeToggle()">
+                讚 {{ article.likes|length }}
+            </div>
+        {% endif %}
+
+        <div class="btn2 text-center" style="padding-top: 16px;padding-bottom: 16px;color: white" onclick="openReply()">回應</div>
+    </div>
+    <HR color=white size="3" align="left" style="margin-top: 0;background-color:white">
+    {% for comment in article.comments %}
+        {% if loop.index0 % 2 == 0 %}
+            <div class="card" style="border:0;background-color: rgb(55, 61, 64)">
+                <div class="card-body">
+                    <h6 class="card-title" style="color:white"><b>{{ comment.author.name }}</b></h6>
+                    <p class="card-text" style="color:white">{{ comment.content }}</p>
+                    {% if current_user.id == comment.author_id %}
+                        <div class="btn-group btn-group-justified btn-group-sm">
+                            <form method="post" action="comment/{{ comment.id }}/">
+                                <button class="btn btn-danger btn-sm" type="submit" name="delete" value="delete"
+                                        >
+                                    刪除
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <div class="card" style="border:0;background-color: rgb(65, 71, 74)">
+                <div class="card-body">
+                    <h6 class="card-title" style="color:white"><b>{{ comment.author.name }}</b></h6>
+                    <p class="card-text" style="color:white">{{ comment.content }}</p>
+                    {% if current_user.id == comment.author_id %}
+                        <div class="btn-group btn-group-justified btn-group-sm">
+                            <form method="post" action="comment/{{ comment.id }}/">
+                                <button class="btn btn-danger btn-sm" type="submit" name="delete" value="delete"
+                                        >
+                                    刪除
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    <div id="replyForm" class="card" style="border:0;background-color: rgb(40, 46, 49);display: none">
+        <div class="card-body">
+            <form action="comment/" method="post">
+                <label for="content" class="sr-only">{{ current_user.name }}</label>
+                <textarea rows="1" id="content" name="content" class="card-text" style="width: 100%"
+                          required></textarea>
+                <button class="btn btn-light" type="submit">送出</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function openReply() {
+            document.getElementById("replyForm").style.display = "flex";
+        }
+
+        function likeToggle() {
+            $.ajax({
+                url: window.location.href + "like/"
+            });
+            if (document.getElementById("like").style.color === "rgb(255, 193, 7)") {
+                document.getElementById("like").innerHTML = "讚 " + (parseInt(strip(document.getElementById("like").innerHTML).split(' ')[1]) - 1).toString();
+                document.getElementById("like").style.color = "rgb(255,255,255)";
+            } else {
+                document.getElementById("like").innerHTML = "讚 " + (parseInt(strip(document.getElementById("like").innerHTML).split(' ')[1]) + 1).toString();
+                document.getElementById("like").style.color = "rgb(255, 193, 7)";
+            }
+        }
+    </script>
+{% endblock %}
