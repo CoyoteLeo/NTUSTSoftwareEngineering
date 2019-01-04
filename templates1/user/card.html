@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block body %}
+    <script src="https://rawgit.com/WeiChiaChang/Easter-egg/master/easter-eggs-collection.js"></script>
+    <div class="row" style="margin-top: 20px">
+        <div class="col-3" style="margin: auto"></div>
+        <div class="col-6">
+            <h2 style="padding-left: 15px;margin-bottom: 10px" align="center">今日抽卡</h2>
+            <br/>
+            <h3 align="center"><i><b>名稱：{{ card.target.name }}</b></i></h3>
+            <div id="loading" style="margin: auto">
+                <div class="text-center">正在讀取最符合的照片...</div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" aria-valuenow="100"
+                         aria-valuemin="0" aria-valuemax="100" role="progressbar" style="width: 100%"></div>
+                </div>
+            </div>
+            <h2 style="padding-left: 15px;margin-bottom: 10px;margin-top: 10px" align="center">
+                下次更新時間: {{ card.updated_at|remain_time }}</h2>
+        </div>
+        <div class="col-3" style="margin: auto"></div>
+    </div>
+    <script>
+        $(function () {
+            setTimeout(function () {
+                $("#loading")[0].innerHTML = '<img style="margin: auto;display: block;max-width: 650px;max-height: 540px;" align="center"' +
+                    'src="/static/img/' + ({{ card.target_id%6 + 1 }}).toString() + '.jpg" alt="">';
+                console.log(3)
+            }, 2000)
+        });
+
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function egg() {
+            let keywords = [
+                "hi", "pikachu", "bravo", "ghost", "britney", "koggy", "sonic", "doggy", "spongebob", "gun", "money",
+                "homer", "dog", "bird", "piqiu", "lol", "ohhh", "nyancat", "salamander", "airguitar", "dragon",
+                "psyduck", "piggy", "sensei", "rabbit", "joker", "mario", "fox", "jump", "tank", "winner", "handsome",
+                "penguin", "swim", "thankyou", "earth", "fly", "snorlax", "board", "haters", "onmyway", "no", "kirby",
+                "hangover", "balloon", "cool", "walk", "ufo", "pie", "pokeball", "hippo", "hiphop", "robot", "bat",
+                "travel", "haha", "kumamon", "unicorn", "wink"
+            ];
+            let index = getRandom(0, keywords.length - 1);
+            for (var i = 0; i < keywords[index].length; i++) {
+                let c = keywords[index].charAt(i);
+                document.dispatchEvent(new KeyboardEvent("keyup", {
+                    keyCode: c.charCodeAt(0) - 32,
+                    which: c.charCodeAt(0) - 32
+                }));
+            }
+        }
+    </script>
+{% endblock %}
