@@ -8,9 +8,9 @@
 |---|---|
 |CoyoteLeo|B10532013 林佑恩|
 |weeturn|B10532001 黃哲韋|
-|BuddistCoding|B10532024 王繹崴|
+|jacky50403|B10532037 王韋翔|
 |hamchick|B10532008 黃信恩|
-|CoyoteLeo|B10532013 林佑恩|
+|BuddistCoding|B10532024 王繹崴|
 
 clone github repository
 ```
