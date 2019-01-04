@@ -40,7 +40,7 @@
     </style>
 </head>
 
-<header class="navbar fixed-top navbar-expand navbar-dark flex-column flex-md-row bd-navbar bg-info text-white">
+<header class="navbar fixed-top navbar-expand navbar-dark flex-column flex-md-row bd-navbar bg-dark text-white">
     <a class="navbar-brand" href="">Mr.Zhao</a>
     <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
         <li class="nav-item"><a class="nav-link p-2" href="/login/" rel="noopener">登入</a></li>
@@ -48,45 +48,45 @@
     </ul>
 </header>
 
-<body>
+<body style="background-color:#1b2125">
 <form class="form-signup" method="POST">
     <img class="mb-4" src="{{ url_for("static", filename="img/title1.png") }}" alt="">
-    <h1 class="h3 mb-3 font-weight-normal text-center">Easy to Sign up and use</h1>
-    <h1 class="h3 mb-3 font-weight-normal text-center">Completely and Always free</h1>
+    <h1 class="h3 mb-3 font-weight-normal text-center" style="color:white">Easy to Sign up and use</h1>
+    <h1 class="h3 mb-3 font-weight-normal text-center" style="color:white">Completely and Always free</h1>
     <div class="form-group">
-        <label for="exampleInputUsername">Username</label>
+        <label for="exampleInputUsername" style="color:white">Username</label>
         <input type="text" class="form-control" id="username" aria-describedby="emailHelp" name="username"
                placeholder="Enter username" required maxlength="80">
         <small id="usernameHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
 
     <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
+        <label for="exampleInputEmail1" style="color:white">Email address</label>
         <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
                placeholder="Enter email" name="email" required maxlength="80">
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
 
     <div class="form-group">
-        <label for="exampleInputNickname">Nickname</label>
+        <label for="exampleInputNickname" style="color:white">Nickname</label>
         <input type="text" class="form-control" id="name" placeholder="Enter your nickname"
                required name="name" maxlength="8">
     </div>
 
     <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password" style="color:white">Password</label>
         <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required
                maxlength="80">
     </div>
 
     <div class="form-group">
-        <label for="exampleInputPassword2">Confirm Password</label>
+        <label for="exampleInputPassword2" style="color:white">Confirm Password</label>
         <input type="password" class="form-control" id="password2" onChange="checkPasswordMatch();"
                placeholder="Enter Password again" required maxlength="80">
     </div>
     <div class="registrationFormAlert" id="divCheckPasswordMatch"></div>
 
-    <button class="btn btn-lg btn-info btn-block"
+    <button class="btn btn-lg btn-dark btn-block"
             onclick="if (checkPasswordMatch()) this.form.submit(); else return false;">Sign Up
     </button>
     <p class="mt-5 mb-3 text-muted text-center">&copy; God Zhao</p>

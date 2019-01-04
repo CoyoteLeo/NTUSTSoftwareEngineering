@@ -29,8 +29,8 @@
     {% block header %}{% endblock %}
 </head>
 <body>
-<div class="container-fluid" style="background-color: white;min-height: 100vh;margin-bottom: 20px;">
-    <div class="row bg-info">
+<div class="container-fluid" style="background-color:#1b2125;min-height: 100vh;margin-bottom: 20px;">
+    <div class="row bg-dark">
         <img class="col-3" src="{{ url_for('static', filename='img/title.png') }}" width="20px" alt=""
              onclick="window.location='/'" style="cursor: pointer">
         <div class="col-6" style="margin: auto;">
@@ -41,7 +41,7 @@
                                placeholder="文章標題" required
                                aria-describedby="button-addon2">
                         <div class="input-group-append">
-                            <button class="btn btn-info" type="button" id="button-addon2"
+                            <button class="btn btn-dark" type="button" id="button-addon2"
                                     onclick="this.form.submit()"
                                     style="border-top-color: white;border-right-color: white;border-bottom-color: white;border-left-color: white;">
                                 搜尋

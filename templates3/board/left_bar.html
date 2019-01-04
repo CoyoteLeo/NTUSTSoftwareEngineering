@@ -26,12 +26,12 @@
         <div class="col-md-2">
             <div class="list-group list-group-flush">
                 <a href="/" class="btn board-block text-center"
-                   style="border-radius: 10px;border: none;color: black">
+                   style="border-radius: 10px;border: none;color: white">
                     <b>看板列表</b>
                 </a>
                 {% for board in boards %}
                     <a href="/board/{{ board.id }}/" style="border-radius: 5px;margin-top: 5px"
-                       class="btn btn-info text-left" role="button">
+                       class="btn btn-dark text-left" role="button">
                         <b>● {{ board.name }}</b>
                     </a>
                 {% endfor %}
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="col-md-6"
-             style="padding:20px 20px 20px 20px;background-color: aliceblue;min-height: 50vh;border-radius: 25px">
+             style="padding:20px 20px 20px 20px;background-color: #282e31;min-height: 50vh;border-radius: 25px">
             {% block main %}{% endblock %}
         </div>
         <div class="col-md-3" style="padding-left: 20px;">

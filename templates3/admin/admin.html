@@ -8,7 +8,7 @@
         <div class="col-2"></div>`
         <div class="col-8">
             <div class="text-center">
-                <table class="table table-striped">
+                <table class="table table-striped table-dark">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
@@ -17,9 +17,9 @@
                         <th scope="col">管理員/批准</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                     {% for board in boards %}
-                        <tr>
+                        <tr >
                             <th scope="row">{{ board.id }}</th>
                             <td>{{ board.name }}</td>
                             <td>{{ board.content }}</td>

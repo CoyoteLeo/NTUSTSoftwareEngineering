@@ -15,17 +15,17 @@
         <div class="col-2"></div>
         <div class="col-8">
             <div style="width: 800px;margin: auto;">
-                <a style="float: right;margin-right: 20px" href="/board/" class="btn btn-success">申請看板</a>
-                <h1 align="center">看板列表</h1>
+                <a style="float: right;margin-right: 20px" href="/board/" class="btn btn-secondary">申請看板</a>
+                <h1 align="center" style="color:white">看板列表</h1>
             </div>
             {% for board in boards %}
-                <div class="card bd" style="background-color: aliceblue">
+                <div class="card bd" style="background-color: #282e31">
                     <div class="card-body">
-                        <div style="float:right;">版主：{{ board.admin.name }}</div>
-                        <h4 class="card-title">{{ board.name }}</h4>
-                        <div class="card-text" style="width: 600px;">{{ board.description }}</div>
+                        <div style="float:right;color: white">版主：{{ board.admin.name }}</div>
+                        <h4 class="card-title" style="color: white">{{ board.name }}</h4>
+                        <div class="card-text" style="width: 600px;color: white">{{ board.description }}</div>
                         <div>
-                            <a style="float: right;" href="/board/{{ board.id }}/" class="btn btn-success">進入看板</a>
+                            <a style="float: right;" href="/board/{{ board.id }}/" class="btn btn-secondary">進入看板</a>
                         </div>
                     </div>
                 </div>
