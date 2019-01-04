@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}
+    <img style="width: 310px;margin: auto;display: block" src="{{ url_for("static", filename="img/review_board.png") }}"
+         alt="">
+{% endblock %}
+{% block body %}
+    <div class="row" style="padding-top: 50px;">
+        <div class="col-2"></div>`
+        <div class="col-8">
+            <div class="text-center">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">看版名稱</th>
+                        <th scope="col">看板說明</th>
+                        <th scope="col">管理員/批准</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for board in boards %}
+                        <tr>
+                            <th scope="row">{{ board.id }}</th>
+                            <td>{{ board.name }}</td>
+                            <td>{{ board.content }}</td>
+                            <td>
+                                {% if board.state == 0 %}
+                                    <form method="POST">
+                                        <button type="submit" name="board_id" value="{{ board.id }}"
+                                                class="btn btn-dark">
+                                            批准
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    {{ board.admin.name }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block header %}
+    <style>
+        .article {
+            padding-bottom: 20px;
+            padding-left: 15px;
+            border-bottom: 2px solid #DFEBF7
+        }
+
+        .article + .article {
+            margin-top: 30px;
+        }
+
+        .ad {
+            width: 240px;
+        }
+
+        .ad + .ad {
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="row" style="padding-top: 50px;">
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+            <div class="list-group list-group-flush">
+                <a href="/" class="btn board-block text-center"
+                   style="border-radius: 10px;border: none;color: black">
+                    <b>看板列表</b>
+                </a>
+                {% for board in boards %}
+                    <a href="/board/{{ board.id }}/" style="border-radius: 5px;margin-top: 5px"
+                       class="btn btn-dark text-left" role="button">
+                        <b>● {{ board.name }}</b>
+                    </a>
+                {% endfor %}
+                <a href="/board/" style="border-radius: 5px;margin-top: 5px"
+                   class="btn btn-secondary text-left" role="button">
+                    <b>申請看板</b>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6"
+             style="padding:20px 20px 20px 20px;background-color: aliceblue;min-height: 50vh;border-radius: 25px">
+            {% block main %}{% endblock %}
+        </div>
+        <div class="col-md-3" style="padding-left: 20px;">
+            {% if not request.cookies.get("ad", None) %}
+                <img class="ad" src="{{ url_for('static', filename='img/sup1.png') }}" alt="">
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
