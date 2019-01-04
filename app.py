@@ -12,7 +12,7 @@ from model.User import User
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-app = Flask(__name__,template_folder="templates3")
+app = Flask(__name__)
 
 controllers = [
     'MainController',
